@@ -12,3 +12,4 @@ plugins {
 
 rootProject.name = "carmen-san-diego"
 include("app")
+include("model")
