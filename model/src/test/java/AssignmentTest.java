@@ -10,15 +10,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class GameTest {
+public class AssignmentTest {
 
     @Test
     @DisplayName("When asking for the actions, should receive the See connections action")
     void getActions_seeConnections() {
-        Game game = new Game();
+        Assignment assignment = new Assignment();
 
-
-        List<GameAction> actions = game.getActions();
+        List<GameAction> actions = assignment.getActions();
         assertThat(actions).hasSize(1);
         assertThat(actions.get(0)).isInstanceOf(SeeConnectionsAction.class);
     }

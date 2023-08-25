@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Game {
+public class Assignment {
 
-    public Game() {
+    public Assignment() {
         actions = List.of(new SeeConnectionsAction());
     }
 
