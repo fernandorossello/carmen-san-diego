@@ -1,3 +1,4 @@
+import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.action.GameAction;
 import app.game.carmensandiego.model.action.SeeConnectionsAction;
 import org.junit.jupiter.api.DisplayName;

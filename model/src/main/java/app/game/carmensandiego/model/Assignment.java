@@ -1,3 +1,5 @@
+package app.game.carmensandiego.model;
+
 import app.game.carmensandiego.model.action.GameAction;
 import app.game.carmensandiego.model.action.SeeConnectionsAction;
 import lombok.Data;
