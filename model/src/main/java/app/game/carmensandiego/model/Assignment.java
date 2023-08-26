@@ -29,4 +29,13 @@ public class Assignment {
 
         return availableConnections;
     }
+
+    public void travelTo(City city) {
+        CurrentLocation newLocation = CurrentLocation.builder()
+                .previousCity(currentLocation.getCurrentCity())
+                .currentCity(city)
+                .build();
+
+        this.currentLocation = newLocation;
+    }
 }

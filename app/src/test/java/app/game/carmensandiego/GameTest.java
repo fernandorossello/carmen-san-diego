@@ -4,7 +4,6 @@ package app.game.carmensandiego;
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
-import static app.game.carmensandiego.Game.Actions.TRAVEL;
+import static app.game.carmensandiego.fixtures.CityMother.londres;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
 import static org.mockito.Mockito.verify;
@@ -78,19 +77,15 @@ public class GameTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("When asking to execute TravelAction, the game should execute the expected action")
     public void executeTravelAction() {
         Assignment assignment = new Assignment();
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
-        game.executeAction(TRAVEL);
+        game.travelTo(londres());
+        game.currentLocationName();
 
-        InOrder inOrder = org.mockito.Mockito.inOrder(output);
-        inOrder.verify(output).println("Conexiones: ");
-        inOrder.verify(output).println("Buenos Aires");
-        inOrder.verify(output).println("Londres");
-        inOrder.verify(output).println("Paris");
+        verify(output).println(londres().name());
     }
 }

@@ -38,9 +38,15 @@ public class Game {
                 output.println("Conexiones: ");
                 connections.forEach(city -> output.println(city.name()));
                 break;
+            case TRAVEL:
+                break;
             default:
                 throw new UnsupportedOperationException("Invalid action");
         }
+    }
+
+    public void travelTo(City city) {
+        assignment.travelTo(city);
     }
 
     public void currentLocationName() {
