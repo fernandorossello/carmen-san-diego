@@ -3,6 +3,7 @@ package app.game.carmensandiego.model.investigation;
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.CitiesRepository;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -88,4 +89,24 @@ public class BasicInvestigationFactoryTest {
         assertThat(trail.get(1).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Paris");
         assertThat(trail.get(2).pointsOfInterest().get(0).getClue()).isEqualTo("Carmen");
     }
+
+    @Test
+    @DisplayName("When crating an investigation it should not add clue to the misleading cities")
+    void createInvestigation_withCluesForMisleadingCities() {
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                CityMother.paris(),
+                CityMother.madrid(),
+                CityMother.london(),
+                CityMother.bangkok())
+        );
+
+        Investigation investigation = investigationFactory.create();
+
+        List<City> cities = investigation.getMisleadingCities();
+        List<PointOfInterest> pois = cities.stream().flatMap(c -> c.pointsOfInterest().stream()).toList();
+
+        assertThat(pois).allMatch(poi -> poi.getClue() == null);
+    }
+
+
 }
