@@ -4,6 +4,7 @@ package app.game.carmensandiego;
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,7 +62,7 @@ public class GameTest {
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
     public void executeSeeConnectionsAction() {
         Assignment assignment = new Assignment();
-        assignment.setCurrentLocation(madridFromBuenosAires());
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
         game.executeAction(1);
@@ -69,7 +70,7 @@ public class GameTest {
         InOrder inOrder = org.mockito.Mockito.inOrder(output);
         inOrder.verify(output).println("Conexiones: ");
         inOrder.verify(output).println("Buenos Aires");
-        inOrder.verify(output).println("Madrid");
         inOrder.verify(output).println("Londres");
+        inOrder.verify(output).println("Paris");
     }
 }

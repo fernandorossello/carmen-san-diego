@@ -1,8 +1,7 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
-import app.game.carmensandiego.model.action.GameAction;
-import app.game.carmensandiego.model.action.SeeConnectionsAction;
+import app.game.carmensandiego.model.CurrentLocation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +9,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.initialLocationMadrid;
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
+import static app.game.carmensandiego.fixtures.CityMother.londres;
+import static app.game.carmensandiego.fixtures.CityMother.paris;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
@@ -61,6 +61,17 @@ public class AssignmentTest {
         List<City> availableConnections = assignment.getAvailableConnections();
 
         assertThat(availableConnections).isEmpty();
+    }
+
+    @Test
+    @DisplayName("When asking for the available connections, should also display other options")
+    void getAvailableConnectionsAlsoDisplayOtherOptions() {
+        Assignment assignment = new Assignment();
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+
+        List<City> availableConnections = assignment.getAvailableConnections();
+
+        assertThat(availableConnections).containsExactlyInAnyOrder(buenosAires, londres(), paris());
     }
 
 }

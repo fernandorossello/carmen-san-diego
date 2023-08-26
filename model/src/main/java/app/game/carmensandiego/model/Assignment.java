@@ -11,19 +11,21 @@ public class Assignment {
     private CurrentLocation currentLocation;
 
     public String getCurrentLocationName() {
-        return currentLocation.currentCity().name();
+        return currentLocation.getCurrentCity().name();
     }
 
     public String getCurrentLocationDescription() {
-        return currentLocation.currentCity().description();
+        return currentLocation.getCurrentCity().description();
     }
 
     public List<City> getAvailableConnections() {
         List<City> availableConnections = new LinkedList<>();
 
-        if(currentLocation.previousCity() != null) {
-            availableConnections.add(currentLocation.previousCity());
+        if(currentLocation.getPreviousCity() != null) {
+            availableConnections.add(currentLocation.getPreviousCity());
         }
+
+        availableConnections.addAll(currentLocation.getCityOptions());
 
         return availableConnections;
     }

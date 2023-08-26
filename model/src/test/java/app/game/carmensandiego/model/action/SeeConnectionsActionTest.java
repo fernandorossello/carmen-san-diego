@@ -1,5 +1,6 @@
 package app.game.carmensandiego.model.action;
 
+import app.game.carmensandiego.fixtures.CurrentLocationMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
 import org.junit.jupiter.api.DisplayName;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SeeConnectionsActionTest {
@@ -24,6 +26,7 @@ public class SeeConnectionsActionTest {
     void execute() {
         SeeConnectionsAction seeConnectionsAction = new SeeConnectionsAction();
         Assignment assignment = new Assignment();
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
 
         List<City> connections = seeConnectionsAction.execute(assignment);
 
