@@ -1,7 +1,6 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
-import app.game.carmensandiego.model.CurrentLocation;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,8 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static app.game.carmensandiego.fixtures.CityMother.*;
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
+import static app.game.carmensandiego.fixtures.CityMother.beijing;
+import static app.game.carmensandiego.fixtures.CityMother.nomPen;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.locationInEuropeTrail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
@@ -88,6 +88,14 @@ public class AssignmentTest {
         assertThatThrownBy(() -> assignment.travelTo(buenosAires))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("City is not in the available connections");
+    }
+
+    @Test
+    @DisplayName("When getting the point of interest to invetigate, should return the poi from the current location")
+    void getPointOfInterest() {
+        assignment.setCurrentLocation(locationInEuropeTrail());
+
+        assertThat(assignment.getPointOfInterest()).isEqualTo(madrid.pointsOfInterest());
     }
 
 }

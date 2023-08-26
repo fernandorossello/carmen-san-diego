@@ -4,7 +4,6 @@ import app.game.carmensandiego.model.investigation.Investigation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -16,11 +15,11 @@ public class Assignment {
     private final Investigation investigation;
 
     public String getCurrentLocationName() {
-        return currentLocation.getCurrentCity().name();
+        return currentCity().name();
     }
 
     public String getCurrentLocationDescription() {
-        return currentLocation.getCurrentCity().description();
+        return currentCity().description();
     }
 
     public List<City> getAvailableConnections() {
@@ -30,7 +29,7 @@ public class Assignment {
     public void travelTo(City city) {
         isValidCity(city);
         this.currentLocation = CurrentLocation.builder()
-                .previousCity(currentLocation.getCurrentCity())
+                .previousCity(currentCity())
                 .currentCity(city)
                 .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
                 .nextInTrail(investigation.getNextCityInTrail(city))
@@ -43,4 +42,11 @@ public class Assignment {
         }
     }
 
+    public List<PointOfInterest> getPointOfInterest() {
+        return currentCity().pointsOfInterest();
+    }
+
+    private City currentCity() {
+        return currentLocation.getCurrentCity();
+    }
 }

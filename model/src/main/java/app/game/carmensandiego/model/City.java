@@ -1,5 +1,10 @@
 package app.game.carmensandiego.model;
 
-public record City(String name, String description) {
+import lombok.Builder;
+
+import java.util.List;
+
+@Builder
+public record City(String name, String description, List<PointOfInterest> pointsOfInterest) {
 }
 
