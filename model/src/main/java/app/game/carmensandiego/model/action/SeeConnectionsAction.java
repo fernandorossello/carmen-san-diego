@@ -5,4 +5,9 @@ public class SeeConnectionsAction implements GameAction {
     public String getName() {
         return "Ver conexiones";
     }
+
+    @Override
+    public String execute() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
