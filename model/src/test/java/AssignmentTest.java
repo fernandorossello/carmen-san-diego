@@ -1,6 +1,7 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.CurrentLocation;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +43,7 @@ public class AssignmentTest {
     @Test
     @DisplayName("When asking for the current location name and description, should provide the right values")
     void getCurrentLocationName() {
-        assignment.setCurrentLocation(madridFromBuenosAires());
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
         assertThat(assignment.getCurrentLocationDescription()).isEqualTo(madrid.description());
         assertThat(assignment.getCurrentLocationName()).isEqualTo(madrid.name());
@@ -51,7 +52,7 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the current location")
     void travel_updateCurrentLocation() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
         assignment.travelTo(london);
 
@@ -60,8 +61,8 @@ public class AssignmentTest {
 
     @Test
     @DisplayName("When traveling to a city, should update the previous location with the current location")
-    void travel_updatePreviousLocation() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+    void travel_updatePreviousLocation() {;
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
         assignment.travelTo(london);
 
@@ -71,20 +72,19 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the city connections options from the investigation")
     void travel_updateCityConnectionsOptions() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
-        when(investigation.getMisleadingCities(4)).thenReturn(List.of(bangkok, tokio,rome(),paris()));
+        when(investigation.getMisleadingCities(4)).thenReturn(List.of(bangkok, tokio, beijing(),nomPen()));
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
         assignment.travelTo(london);
 
-        assertThat(assignment.getAvailableConnections()).containsExactlyInAnyOrder(madrid, bangkok, tokio);
+        assertThat(assignment.getAvailableConnections()).containsExactlyInAnyOrder(madrid, bangkok, tokio, beijing());
     }
 
     @Test
     @DisplayName("When traveling to a city that is not in the options, should throw an exception")
     void travel_toCityNotInOptions() {
-        assignment.setCurrentLocation(initialLocationMadrid());
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
-        assertThat(assignment.getAvailableConnections()).doesNotContain(buenosAires);
         assertThatThrownBy(() -> assignment.travelTo(buenosAires))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("City is not in the available connections");

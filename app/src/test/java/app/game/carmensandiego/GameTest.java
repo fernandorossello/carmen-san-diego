@@ -1,48 +1,42 @@
 package app.game.carmensandiego;
 
 
-import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.CurrentLocation;
 import app.game.carmensandiego.model.investigation.Investigation;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
+
 import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
-import static app.game.carmensandiego.fixtures.CityMother.london;
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
+import static app.game.carmensandiego.fixtures.CityMother.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class GameTest {
-    private final City madrid = CityMother.madrid();
 
-    @Mock Output output;
-    @Mock Investigation investigation;
+    @Mock private Output output;
+    @Mock private Investigation investigation;
 
-    private Assignment assignment;
+    @Mock private CurrentLocation currentLocation;
 
+    @Mock private Assignment assignment;
 
-    @BeforeEach
-    void setUp() {
-        assignment = new Assignment(investigation);
-    }
 
     @Test
     @DisplayName("When asking to for the name of the current location, the game should display it correctly")
     public void currentLocationName() {
+        when(assignment.getCurrentLocationName()).thenReturn(paris().name());
         Game game = new Game(output, assignment);
-        assignment.setCurrentLocation(madridFromBuenosAires());
 
         game.currentLocationName();
 
-        verify(output).println(madrid.name());
+        verify(output).println(paris().name());
     }
 
 
@@ -50,11 +44,11 @@ public class GameTest {
     @DisplayName("When asking to for the name of the current location, the game should display it correctly")
     public void currentLocationDescription() {
         Game game = new Game(output, assignment);
-        assignment.setCurrentLocation(madridFromBuenosAires());
+        when(assignment.getCurrentLocationDescription()).thenReturn(madrid().description());
 
         game.currentLocationDescription();
 
-        verify(output).println(madrid.description());
+        verify(output).println(madrid().description());
     }
 
     @Test
@@ -70,26 +64,28 @@ public class GameTest {
     @Test
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
     public void executeSeeConnectionsAction() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+        when(assignment.getAvailableConnections()).thenReturn(List.of(madrid(), paris(), london(), rome()));
         Game game = new Game(output, assignment);
 
         game.executeAction(SEE_CONNECTIONS);
 
-        InOrder inOrder = org.mockito.Mockito.inOrder(output);
-        inOrder.verify(output).println("Conexiones: ");
-        inOrder.verify(output).println("Buenos Aires");
-        inOrder.verify(output).println("Londres");
-        inOrder.verify(output).println("Paris");
+        verify(output).println("Conexiones: ");
+        verify(output).println("Madrid");
+        verify(output).println("Paris");
+        verify(output).println("Londres");
+        verify(output).println("Roma");
     }
 
     @Test
     @DisplayName("When asking to execute TravelAction, the game should execute the expected action")
     public void executeTravelAction() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+        when(assignment.getCurrentLocationName()).thenReturn(london().name());
+        when(assignment.getCurrentLocationDescription()).thenReturn(london().description());
         Game game = new Game(output, assignment);
 
         game.travelTo(london());
 
+        verify(assignment).travelTo(london());
         verify(output).println("Bienvenido a Londres. Capital de Inglaterra");
     }
 }

@@ -10,7 +10,7 @@ import org.mockito.Mock;
 
 import java.util.List;
 
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.locationInEuropeTrail;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Disabled
@@ -33,7 +33,7 @@ public class SeeConnectionsActionTest {
     void execute() {
         SeeConnectionsAction seeConnectionsAction = new SeeConnectionsAction();
         Assignment assignment = new Assignment(investigation);
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+        assignment.setCurrentLocation(locationInEuropeTrail());
 
         List<City> connections = seeConnectionsAction.execute(assignment);
 

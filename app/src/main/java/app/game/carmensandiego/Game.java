@@ -47,7 +47,7 @@ public class Game {
 
     public void travelTo(City city) {
         assignment.travelTo(city);
-        output.println("Bienvenido a " + city.name() + ". " + city.description());
+        output.println("Bienvenido a " + assignment.getCurrentLocationName() + ". " + assignment.getCurrentLocationDescription());
     }
 
     public void currentLocationName() {
