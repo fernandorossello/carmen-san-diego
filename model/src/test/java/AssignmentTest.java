@@ -2,18 +2,20 @@ import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
 import app.game.carmensandiego.model.CurrentLocation;
+import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static app.game.carmensandiego.fixtures.CityMother.londres;
-import static app.game.carmensandiego.fixtures.CityMother.paris;
+import static app.game.carmensandiego.fixtures.CityMother.*;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AssignmentTest {
@@ -23,11 +25,19 @@ public class AssignmentTest {
 
     private final City londres = CityMother.londres();
 
+    private final City bangkok = CityMother.bangkok();
+
+    private final City tokio = CityMother.tokio();
+
+
+    @Mock
+    private Investigation investigation;
+
     private Assignment assignment;
 
     @BeforeEach
     void setUp() {
-        assignment = new Assignment();
+        assignment = new Assignment(investigation);
     }
 
     @Test
@@ -76,7 +86,7 @@ public class AssignmentTest {
 
         List<City> availableConnections = assignment.getAvailableConnections();
 
-        assertThat(availableConnections).containsExactlyInAnyOrder(buenosAires, londres(), paris());
+        assertThat(availableConnections).containsExactlyInAnyOrder(buenosAires, londres, paris());
     }
 
     @Test
@@ -97,6 +107,17 @@ public class AssignmentTest {
         assignment.travelTo(londres);
 
         assertThat(assignment.getCurrentLocation().getPreviousCity()).isEqualTo(madrid);
+    }
+
+    @Test
+    @DisplayName("When traveling to a city, should update the city connections options from the investigation")
+    void travel_updateCityConnectionsOptions() {
+        assignment.setCurrentLocation(initialLocationMadrid());
+        when(investigation.getMisleadingCities(3)).thenReturn(List.of(bangkok, tokio));
+
+        assignment.travelTo(londres);
+
+        assertThat(assignment.getAvailableConnections()).containsExactlyInAnyOrder(madrid, bangkok, tokio);
     }
 
 }

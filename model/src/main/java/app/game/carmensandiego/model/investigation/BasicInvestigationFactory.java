@@ -14,13 +14,15 @@ public class BasicInvestigationFactory implements InvestigationFactory {
     private final CitiesRepository citiesRepository;
     @Override
     public Investigation create() {
-        List<City> cities1 = getCities(AMOUNT_OF_COUNTRIES);
-        return new Investigation(cities1);
+        List<City> allCities = citiesRepository.findAll();
+        Collections.shuffle(allCities, new Random(System.nanoTime()));
+        List<City> trail = allCities.subList(0, AMOUNT_OF_COUNTRIES);
+        List<City> otherCities = allCities.subList(AMOUNT_OF_COUNTRIES, allCities.size());
+
+        return new Investigation.InvestigationBuilder()
+                .trail(trail)
+                .misleadingCities(otherCities)
+                .build();
     }
 
-    private List<City> getCities(int amountOfCountries) {
-        List<City> cities = citiesRepository.findAll();
-        Collections.shuffle(cities, new Random(System.nanoTime()));
-        return cities.subList(0, amountOfCountries);
-    }
 }

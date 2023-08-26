@@ -3,7 +3,6 @@ package app.game.carmensandiego.fixtures;
 import app.game.carmensandiego.model.City;
 
 public class CityMother {
-
     public static City buenosAires() {
         return new City("Buenos Aires", "Capital de Argentina");
     }
@@ -19,4 +18,13 @@ public class CityMother {
     public static City paris() {
         return new City("Paris", "Capital de Francia");
     }
+
+    public static City bangkok() {
+        return new City("Bangkok", "Capital de Tailandia");
+    }
+
+    public static City tokio() {
+        return new City("Tokio", "Capital de Japón");
+    }
+
 }

@@ -3,7 +3,12 @@ package app.game.carmensandiego;
 
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.CitiesRepository;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.investigation.BasicInvestigationFactory;
+import app.game.carmensandiego.model.investigation.Investigation;
+import app.game.carmensandiego.model.investigation.InvestigationFactory;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,15 +24,22 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 public class GameTest {
+    private final City madrid = CityMother.madrid();
 
     @Mock Output output;
+    @Mock Investigation investigation;
 
-    private final City madrid = CityMother.madrid();
+    private Assignment assignment;
+
+
+    @BeforeEach
+    void setUp() {
+        assignment = new Assignment(investigation);
+    }
 
     @Test
     @DisplayName("When asking to for the name of the current location, the game should display it correctly")
     public void currentLocationName() {
-        Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
         assignment.setCurrentLocation(madridFromBuenosAires());
 
@@ -40,7 +52,6 @@ public class GameTest {
     @Test
     @DisplayName("When asking to for the name of the current location, the game should display it correctly")
     public void currentLocationDescription() {
-        Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
         assignment.setCurrentLocation(madridFromBuenosAires());
 
@@ -52,7 +63,6 @@ public class GameTest {
     @Test
     @DisplayName("When asking to displayActions a game should display all the actions available")
     public void displayActions() {
-        Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
 
         game.displayActions();
@@ -63,7 +73,6 @@ public class GameTest {
     @Test
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
     public void executeSeeConnectionsAction() {
-        Assignment assignment = new Assignment();
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
@@ -79,13 +88,11 @@ public class GameTest {
     @Test
     @DisplayName("When asking to execute TravelAction, the game should execute the expected action")
     public void executeTravelAction() {
-        Assignment assignment = new Assignment();
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
         game.travelTo(londres());
-        game.currentLocationName();
 
-        verify(output).println(londres().name());
+        verify(output).println("Bienvenido a Londres. Capital de Inglaterra");
     }
 }
