@@ -12,7 +12,10 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
+import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
+import static app.game.carmensandiego.Game.Actions.TRAVEL;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -65,7 +68,24 @@ public class GameTest {
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
-        game.executeAction(1);
+        game.executeAction(SEE_CONNECTIONS);
+
+        InOrder inOrder = org.mockito.Mockito.inOrder(output);
+        inOrder.verify(output).println("Conexiones: ");
+        inOrder.verify(output).println("Buenos Aires");
+        inOrder.verify(output).println("Londres");
+        inOrder.verify(output).println("Paris");
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("When asking to execute TravelAction, the game should execute the expected action")
+    public void executeTravelAction() {
+        Assignment assignment = new Assignment();
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
+        Game game = new Game(output, assignment);
+
+        game.executeAction(TRAVEL);
 
         InOrder inOrder = org.mockito.Mockito.inOrder(output);
         inOrder.verify(output).println("Conexiones: ");

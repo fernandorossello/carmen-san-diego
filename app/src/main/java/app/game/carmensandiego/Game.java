@@ -31,9 +31,9 @@ public class Game {
         actions.forEach((index, action) -> output.println(index + ". " + action.getName()));
     }
 
-    public void executeAction(int index) {
+    public void executeAction(Actions index) {
         switch (index) {
-            case 1:
+            case SEE_CONNECTIONS:
                 List<City> connections = seeConnectionsAction.execute(assignment);
                 output.println("Conexiones: ");
                 connections.forEach(city -> output.println(city.name()));
@@ -51,5 +51,17 @@ public class Game {
     public void currentLocationDescription() {
         String cityDescription = assignment.getCurrentLocationDescription();
         output.println(cityDescription);
+    }
+
+    public enum Actions {
+
+        SEE_CONNECTIONS(1),
+        TRAVEL(2);
+
+        private int value;
+
+        Actions(int value) {
+            this.value = value;
+        }
     }
 }
