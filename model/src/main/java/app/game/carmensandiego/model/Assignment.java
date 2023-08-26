@@ -1,7 +1,5 @@
 package app.game.carmensandiego.model;
 
-import app.game.carmensandiego.model.action.GameAction;
-import app.game.carmensandiego.model.action.SeeConnectionsAction;
 import lombok.Data;
 
 import java.util.List;
@@ -9,18 +7,17 @@ import java.util.List;
 @Data
 public class Assignment {
 
-    public Assignment() {
-        actions = List.of(new SeeConnectionsAction());
-    }
-
-    private final List<GameAction> actions;
-    private City currentLocation;
+    private CurrentLocation currentLocation;
 
     public String getCurrentLocationName() {
-        return currentLocation.name();
+        return currentLocation.currentCity().name();
     }
 
     public String getCurrentLocationDescription() {
-        return currentLocation.description();
+        return currentLocation.currentCity().description();
+    }
+
+    public List<City> getAvailableConnections() {
+        return List.of(currentLocation.previousCity());
     }
 }

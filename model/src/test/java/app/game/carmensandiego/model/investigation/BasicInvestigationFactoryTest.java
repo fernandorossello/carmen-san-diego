@@ -2,13 +2,13 @@ package app.game.carmensandiego.model.investigation;
 
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.CitiesRepository;
-import app.game.carmensandiego.model.City;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import java.util.Arrays;
 

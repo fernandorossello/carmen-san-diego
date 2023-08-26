@@ -1,7 +1,9 @@
 package app.game.carmensandiego;
 
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.City;
 import app.game.carmensandiego.model.action.GameAction;
+import app.game.carmensandiego.model.action.SeeConnectionsAction;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +13,9 @@ import java.util.Map;
 public class Game {
     private final Output output;
     private final Assignment assignment;
+
     private final Map<Integer, GameAction> actions = new HashMap<>();
+    private final SeeConnectionsAction seeConnectionsAction = new SeeConnectionsAction();
 
     public Game(Output output, Assignment assignment) {
         this.output = output;
@@ -20,10 +24,7 @@ public class Game {
     }
 
     private void initActions() {
-        List<GameAction> availableActions = assignment.getActions();
-        actions.put(1, availableActions.get(0));
-            /*IntStream.of(1, availableActions.size()+1)
-                    .forEach(index -> actions.put(index-1, availableActions.get(index-1)));*/
+        actions.put(1, seeConnectionsAction);
     }
 
     public void displayActions() {
@@ -31,8 +32,15 @@ public class Game {
     }
 
     public void executeAction(int index) {
-        String out = actions.get(index).execute();
-        output.println(out);
+        switch (index) {
+            case 1:
+                List<City> connections = seeConnectionsAction.execute(assignment);
+                output.println("Conexiones: ");
+                connections.forEach(city -> output.println(city.name()));
+                break;
+            default:
+                throw new UnsupportedOperationException("Invalid action");
+        }
     }
 
     public void currentLocationName() {

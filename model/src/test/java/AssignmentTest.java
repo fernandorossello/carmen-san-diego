@@ -10,43 +10,45 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 public class AssignmentTest {
 
     private final City buenosAires = CityMother.buenosAires();
-
-    @Test
-    @DisplayName("When asking for the actions, should receive the See connections action")
-    void getActions_seeConnections() {
-        Assignment assignment = new Assignment();
-
-        List<GameAction> actions = assignment.getActions();
-        assertThat(actions).hasSize(1);
-        assertThat(actions.get(0)).isInstanceOf(SeeConnectionsAction.class);
-    }
+    private final City madrid = CityMother.madrid();
 
     @Test
     @DisplayName("When asking for the current location name, should receive the current location name from the City")
     void getCurrentLocationName() {
         Assignment assignment = new Assignment();
-        assignment.setCurrentLocation(buenosAires);
+        assignment.setCurrentLocation(madridFromBuenosAires());
 
         String currentLocationName = assignment.getCurrentLocationName();
-        assertThat(currentLocationName).isEqualTo(buenosAires.name());
+        assertThat(currentLocationName).isEqualTo(madrid.name());
     }
 
     @Test
     @DisplayName("When asking for the current location description, should receive the current location description from the City")
     void getCurrentLocationDescription() {
         Assignment assignment = new Assignment();
-
-        assignment.setCurrentLocation(buenosAires);
+        assignment.setCurrentLocation(madridFromBuenosAires());
 
         String currentLocationDescription = assignment.getCurrentLocationDescription();
-        assertThat(currentLocationDescription).isEqualTo(buenosAires.description());
+
+        assertThat(currentLocationDescription).isEqualTo(madrid.description());
     }
 
+    @Test
+    @DisplayName("When asking for the available connections, the first connection should be the previous city")
+    void getAvailableConnections() {
+        Assignment assignment = new Assignment();
+        assignment.setCurrentLocation(madridFromBuenosAires());
+
+        List<City> availableConnections = assignment.getAvailableConnections();
+
+        assertThat(availableConnections.get(0)).isEqualTo(buenosAires);
+    }
 
 }
