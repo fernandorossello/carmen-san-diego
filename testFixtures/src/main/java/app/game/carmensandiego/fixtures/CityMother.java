@@ -11,12 +11,16 @@ public class CityMother {
         return new City("Madrid", "Capital de España");
     }
 
-    public static City londres() {
+    public static City london() {
             return new City("Londres", "Capital de Inglaterra");
     }
 
     public static City paris() {
         return new City("Paris", "Capital de Francia");
+    }
+
+    public static City rome() {
+        return new City("Roma", "Capital de Italia");
     }
 
     public static City bangkok() {

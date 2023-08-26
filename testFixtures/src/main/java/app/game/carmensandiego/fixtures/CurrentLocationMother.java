@@ -22,13 +22,10 @@ public class CurrentLocationMother {
     }
 
     public static CurrentLocation madridFromBuenosAiresWithEuropeOptions() {
-        CurrentLocation location = CurrentLocation.builder()
+        return CurrentLocation.builder()
                 .previousCity(buenosAires())
                 .currentCity(madrid())
+                .cityOptions(List.of(london(), paris(), rome()))
                 .build();
-
-        location.addCityOptions(List.of(londres(), paris()));
-
-        return location;
     }
 }

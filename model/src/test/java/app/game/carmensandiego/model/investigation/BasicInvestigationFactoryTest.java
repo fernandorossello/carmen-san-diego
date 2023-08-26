@@ -32,7 +32,7 @@ public class BasicInvestigationFactoryTest {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.buenosAires(),
                 CityMother.madrid(),
-                CityMother.londres(),
+                CityMother.london(),
                 CityMother.paris())
         );
 
@@ -47,7 +47,7 @@ public class BasicInvestigationFactoryTest {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.buenosAires(),
                 CityMother.madrid(),
-                CityMother.londres(),
+                CityMother.london(),
                 CityMother.paris(),
                 CityMother.bangkok(),
                 CityMother.tokio())

@@ -11,9 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Assignment {
 
-    public static final int AMOUNT_OF_MISLEADING_CITIES = 3;
+    public static final int AMOUNT_OF_MISLEADING_CITIES = 4;
     private CurrentLocation currentLocation;
     private final Investigation investigation;
+    private List<City> availableConnections;
 
     public String getCurrentLocationName() {
         return currentLocation.getCurrentCity().name();
@@ -26,30 +27,17 @@ public class Assignment {
     public List<City> getAvailableConnections() {
         List<City> availableConnections = new LinkedList<>();
 
-        if(currentLocation.getPreviousCity() != null) {
-            availableConnections.add(currentLocation.getPreviousCity());
-        }
-
-        if(investigation.isInTrail(currentLocation.getCurrentCity())) {
-            availableConnections.add(investigation.getNextCityInTrail(currentLocation.getCurrentCity()));
-        }
-
-        availableConnections.addAll(currentLocation.getCityOptions());
-
         return availableConnections;
     }
-//TODO: Unify the creation of the list of options
+
     public void travelTo(City city) {
         isValidCity(city);
-
-        CurrentLocation newLocation = CurrentLocation.builder()
+        this.currentLocation = CurrentLocation.builder()
                 .previousCity(currentLocation.getCurrentCity())
                 .currentCity(city)
+                .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
+                .nextInTrail(investigation.getNextCityInTrail(city))
                 .build();
-
-        newLocation.addCityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES));
-
-        this.currentLocation = newLocation;
     }
 
     private void isValidCity(City city) {
@@ -57,4 +45,12 @@ public class Assignment {
             throw new IllegalArgumentException("City is not in the available connections");
         }
     }
+    private boolean currentCityIsInTheTrail() {
+        return investigation.isInTrail(currentLocation.getCurrentCity());
+    }
+
+    private boolean isNotStartingCity() {
+        return currentLocation.getPreviousCity() != null;
+    }
+
 }

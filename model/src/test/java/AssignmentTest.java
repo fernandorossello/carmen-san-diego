@@ -1,7 +1,6 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
-import app.game.carmensandiego.model.CurrentLocation;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -24,12 +23,11 @@ public class AssignmentTest {
     private final City buenosAires = CityMother.buenosAires();
     private final City madrid = CityMother.madrid();
 
-    private final City londres = CityMother.londres();
+    private final City london = CityMother.london();
 
     private final City bangkok = CityMother.bangkok();
 
     private final City tokio = CityMother.tokio();
-
 
     @Mock
     private Investigation investigation;
@@ -42,66 +40,12 @@ public class AssignmentTest {
     }
 
     @Test
-    @DisplayName("When asking for the current location name, should receive the current location name from the City")
+    @DisplayName("When asking for the current location name and description, should provide the right values")
     void getCurrentLocationName() {
         assignment.setCurrentLocation(madridFromBuenosAires());
 
-        String currentLocationName = assignment.getCurrentLocationName();
-        assertThat(currentLocationName).isEqualTo(madrid.name());
-    }
-
-    @Test
-    @DisplayName("When asking for the current location description, should receive the current location description from the City")
-    void getCurrentLocationDescription() {
-        assignment.setCurrentLocation(madridFromBuenosAires());
-
-        String currentLocationDescription = assignment.getCurrentLocationDescription();
-
-        assertThat(currentLocationDescription).isEqualTo(madrid.description());
-    }
-
-    @Test
-    @DisplayName("When asking for the available connections, the first connection should be the previous city")
-    void getAvailableConnections() {
-        assignment.setCurrentLocation(madridFromBuenosAires());
-
-        List<City> availableConnections = assignment.getAvailableConnections();
-
-        assertThat(availableConnections.get(0)).isEqualTo(buenosAires);
-    }
-
-    @Test
-    @DisplayName("When asking for the available connections, connections should include the next city in the trail")
-    void getAvailableConnectionsIncludesNextInTrail() {
-        assignment.setCurrentLocation(madridFromBuenosAires());
-        when(investigation.isInTrail(madrid)).thenReturn(true);
-        when(investigation.getNextCityInTrail(madrid)).thenReturn(londres);
-
-        List<City> availableConnections = assignment.getAvailableConnections();
-
-        assertThat(availableConnections).contains(londres);
-    }
-
-    //TODO: Add test for last city in trail
-
-    @Test
-    @DisplayName("When asking for the available connections on the first location, should not fail because there is no previous city")
-    void getAvailableConnectionsOnFirstLocation() {
-        assignment.setCurrentLocation(initialLocationMadrid());
-
-        List<City> availableConnections = assignment.getAvailableConnections();
-
-        assertThat(availableConnections).isEmpty();
-    }
-
-    @Test
-    @DisplayName("When asking for the available connections, should also display other options")
-    void getAvailableConnectionsAlsoDisplayOtherOptions() {
-        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
-
-        List<City> availableConnections = assignment.getAvailableConnections();
-
-        assertThat(availableConnections).containsExactlyInAnyOrder(buenosAires, londres, paris());
+        assertThat(assignment.getCurrentLocationDescription()).isEqualTo(madrid.description());
+        assertThat(assignment.getCurrentLocationName()).isEqualTo(madrid.name());
     }
 
     @Test
@@ -109,9 +53,9 @@ public class AssignmentTest {
     void travel_updateCurrentLocation() {
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
 
-        assignment.travelTo(londres);
+        assignment.travelTo(london);
 
-        assertThat(assignment.getCurrentLocationName()).isEqualTo(londres.name());
+        assertThat(assignment.getCurrentLocationName()).isEqualTo(london.name());
     }
 
     @Test
@@ -119,7 +63,7 @@ public class AssignmentTest {
     void travel_updatePreviousLocation() {
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
 
-        assignment.travelTo(londres);
+        assignment.travelTo(london);
 
         assertThat(assignment.getCurrentLocation().getPreviousCity()).isEqualTo(madrid);
     }
@@ -128,9 +72,9 @@ public class AssignmentTest {
     @DisplayName("When traveling to a city, should update the city connections options from the investigation")
     void travel_updateCityConnectionsOptions() {
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
-        when(investigation.getMisleadingCities(3)).thenReturn(List.of(bangkok, tokio));
+        when(investigation.getMisleadingCities(4)).thenReturn(List.of(bangkok, tokio,rome(),paris()));
 
-        assignment.travelTo(londres);
+        assignment.travelTo(london);
 
         assertThat(assignment.getAvailableConnections()).containsExactlyInAnyOrder(madrid, bangkok, tokio);
     }

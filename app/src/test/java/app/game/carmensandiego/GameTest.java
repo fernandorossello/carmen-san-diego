@@ -3,11 +3,8 @@ package app.game.carmensandiego;
 
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.CitiesRepository;
 import app.game.carmensandiego.model.City;
-import app.game.carmensandiego.model.investigation.BasicInvestigationFactory;
 import app.game.carmensandiego.model.investigation.Investigation;
-import app.game.carmensandiego.model.investigation.InvestigationFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
-import static app.game.carmensandiego.fixtures.CityMother.londres;
+import static app.game.carmensandiego.fixtures.CityMother.london;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
 import static org.mockito.Mockito.verify;
@@ -91,7 +88,7 @@ public class GameTest {
         assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         Game game = new Game(output, assignment);
 
-        game.travelTo(londres());
+        game.travelTo(london());
 
         verify(output).println("Bienvenido a Londres. Capital de Inglaterra");
     }
