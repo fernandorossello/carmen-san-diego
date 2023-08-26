@@ -12,4 +12,10 @@ public class CurrentLocationMother {
                 .currentCity(madrid())
                 .build();
     }
+
+    public static CurrentLocation initialLocationMadrid() {
+        return CurrentLocation.builder()
+                .currentCity(madrid())
+                .build();
+    }
 }

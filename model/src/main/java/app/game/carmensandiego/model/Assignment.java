@@ -2,6 +2,7 @@ package app.game.carmensandiego.model;
 
 import lombok.Data;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -18,6 +19,12 @@ public class Assignment {
     }
 
     public List<City> getAvailableConnections() {
-        return List.of(currentLocation.previousCity());
+        List<City> availableConnections = new LinkedList<>();
+
+        if(currentLocation.previousCity() != null) {
+            availableConnections.add(currentLocation.previousCity());
+        }
+
+        return availableConnections;
     }
 }

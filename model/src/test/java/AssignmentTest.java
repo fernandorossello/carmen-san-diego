@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.initialLocationMadrid;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAires;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,6 +50,17 @@ public class AssignmentTest {
         List<City> availableConnections = assignment.getAvailableConnections();
 
         assertThat(availableConnections.get(0)).isEqualTo(buenosAires);
+    }
+
+    @Test
+    @DisplayName("When asking for the available connections on the first location, should not fail because there is no previous city")
+    void getAvailableConnectionsOnFirstLocation() {
+        Assignment assignment = new Assignment();
+        assignment.setCurrentLocation(initialLocationMadrid());
+
+        List<City> availableConnections = assignment.getAvailableConnections();
+
+        assertThat(availableConnections).isEmpty();
     }
 
 }
