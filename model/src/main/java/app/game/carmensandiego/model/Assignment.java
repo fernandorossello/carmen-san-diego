@@ -30,11 +30,15 @@ public class Assignment {
             availableConnections.add(currentLocation.getPreviousCity());
         }
 
+        if(investigation.isInTrail(currentLocation.getCurrentCity())) {
+            availableConnections.add(investigation.getNextCityInTrail(currentLocation.getCurrentCity()));
+        }
+
         availableConnections.addAll(currentLocation.getCityOptions());
 
         return availableConnections;
     }
-
+//TODO: Unify the creation of the list of options
     public void travelTo(City city) {
         isValidCity(city);
 

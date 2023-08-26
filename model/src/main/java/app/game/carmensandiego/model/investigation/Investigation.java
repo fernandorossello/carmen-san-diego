@@ -17,4 +17,12 @@ public class Investigation {
     public List<City> getMisleadingCities(int amount) {
         throw new UnsupportedOperationException("Not implemented yet");
     }
+
+    public City getNextCityInTrail(City currentCity) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public boolean isInTrail(City currentCity) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
 }

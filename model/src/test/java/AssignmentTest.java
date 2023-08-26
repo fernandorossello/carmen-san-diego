@@ -71,6 +71,20 @@ public class AssignmentTest {
     }
 
     @Test
+    @DisplayName("When asking for the available connections, connections should include the next city in the trail")
+    void getAvailableConnectionsIncludesNextInTrail() {
+        assignment.setCurrentLocation(madridFromBuenosAires());
+        when(investigation.isInTrail(madrid)).thenReturn(true);
+        when(investigation.getNextCityInTrail(madrid)).thenReturn(londres);
+
+        List<City> availableConnections = assignment.getAvailableConnections();
+
+        assertThat(availableConnections).contains(londres);
+    }
+
+    //TODO: Add test for last city in trail
+
+    @Test
     @DisplayName("When asking for the available connections on the first location, should not fail because there is no previous city")
     void getAvailableConnectionsOnFirstLocation() {
         assignment.setCurrentLocation(initialLocationMadrid());

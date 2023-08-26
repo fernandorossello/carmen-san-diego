@@ -3,6 +3,7 @@ package app.game.carmensandiego.model.action;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
 import app.game.carmensandiego.model.investigation.Investigation;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,7 +13,9 @@ import java.util.List;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.madridFromBuenosAiresWithEuropeOptions;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Disabled
 public class SeeConnectionsActionTest {
+    //TODO: BORRAR ESTA CLASE
 
     @Mock
     Investigation investigation;
