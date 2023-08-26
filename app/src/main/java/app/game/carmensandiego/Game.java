@@ -39,4 +39,9 @@ public class Game {
         String cityName = assignment.getCurrentLocationName();
         output.println(cityName);
     }
+
+    public void currentLocationDescription() {
+        String cityDescription = assignment.getCurrentLocationDescription();
+        output.println(cityDescription);
+    }
 }

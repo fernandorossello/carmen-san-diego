@@ -29,10 +29,21 @@ public class AssignmentTest {
     void getCurrentLocationName() {
         Assignment assignment = new Assignment();
         String cityName = "Buenos Aires";
-        assignment.setCurrentLocation(new City(cityName));
+        assignment.setCurrentLocation(new City(cityName, "description"));
 
         String currentLocationName = assignment.getCurrentLocationName();
         assertThat(currentLocationName).isEqualTo(cityName);
+    }
+
+    @Test
+    @DisplayName("When asking for the current location description, should receive the current location description from the City")
+    void getCurrentLocationDescription() {
+        Assignment assignment = new Assignment();
+        String cityDescription = "Capital de Argentina";
+        assignment.setCurrentLocation(new City("Buenos Aires", cityDescription));
+
+        String currentLocationDescription = assignment.getCurrentLocationDescription();
+        assertThat(currentLocationDescription).isEqualTo(cityDescription);
     }
 
 

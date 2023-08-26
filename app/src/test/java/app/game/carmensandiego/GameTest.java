@@ -24,11 +24,26 @@ public class GameTest {
         Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
         String cityName = "Buenos Aires";
-        assignment.setCurrentLocation(new City(cityName));
+        assignment.setCurrentLocation(new City(cityName, "Capital de Argentina"));
 
         game.currentLocationName();
 
         verify(output).println(cityName);
+    }
+
+
+    @Test
+    @DisplayName("When asking to for the name of the current location, the game should display it correctly")
+    public void currentLocationDescription() {
+        Assignment assignment = new Assignment();
+        Game game = new Game(output, assignment);
+        String cityName = "Buenos Aires";
+        String cityDescription = "Capital de Argentina";
+        assignment.setCurrentLocation(new City(cityName, cityDescription));
+
+        game.currentLocationDescription();
+
+        verify(output).println(cityDescription);
     }
 
     @Test

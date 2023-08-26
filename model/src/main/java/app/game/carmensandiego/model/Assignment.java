@@ -19,4 +19,8 @@ public class Assignment {
     public String getCurrentLocationName() {
         return currentLocation.name();
     }
+
+    public String getCurrentLocationDescription() {
+        return currentLocation.cityDescription();
+    }
 }

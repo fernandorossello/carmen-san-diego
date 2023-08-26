@@ -27,10 +27,10 @@ public class BasicInvestigationFactoryTest {
     @DisplayName("When creating an investigation it should be created with a list of cities")
     void createInvestigation_withCities() {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
-                new City("Buenos Aires"),
-                new City("Madrid"),
-                new City("Londres"),
-                new City("Paris"))
+                new City("Buenos Aires", "descripcion Buenos Aires"),
+                new City("Madrid", "descripcion Madrid"),
+                new City("Londres", "descripcion Londres"),
+                new City("Paris", "descripcion Paris"))
         );
 
         Investigation investigation = investigationFactory.create();
