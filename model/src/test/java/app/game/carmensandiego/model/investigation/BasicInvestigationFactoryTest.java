@@ -3,6 +3,8 @@ package app.game.carmensandiego.model.investigation;
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.CitiesRepository;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.RandomProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -23,8 +26,16 @@ public class BasicInvestigationFactoryTest {
     @Mock
     CitiesRepository citiesRepository;
 
+    @Mock
+    RandomProvider randomProvider;
+
     @InjectMocks
     BasicInvestigationFactory investigationFactory;
+
+    @BeforeEach
+    void setUp() {
+        when(randomProvider.getRnd()).thenReturn(new Random(1));
+    }
 
     @Test
     @DisplayName("When creating an investigation it should be created with a list of cities")
@@ -59,5 +70,22 @@ public class BasicInvestigationFactoryTest {
         assertThat(misleadingCities).hasSize(3);
         assertThat(misleadingCities).doesNotContainAnyElementsOf(investigation.getTrail());
         assertThat(investigation.getTrail()).doesNotContainAnyElementsOf(misleadingCities);
+    }
+
+    @Test
+    @DisplayName("When crating an investigation it should add the proper clues to the cities, based on the next city")
+    void createInvestigation_withClues() {
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                CityMother.paris(),
+                CityMother.madrid(),
+                CityMother.london())
+        );
+
+        Investigation investigation = investigationFactory.create();
+
+        List<City> trail = investigation.getTrail();
+        assertThat(trail.get(0).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Londres");
+        assertThat(trail.get(1).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Paris");
+        assertThat(trail.get(2).pointsOfInterest().get(0).getClue()).isEqualTo("Carmen");
     }
 }

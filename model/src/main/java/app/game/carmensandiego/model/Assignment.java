@@ -49,4 +49,8 @@ public class Assignment {
     private City currentCity() {
         return currentLocation.getCurrentCity();
     }
+
+    public String investigatePointOfInterest(PointOfInterest pointOfInterest) {
+        return pointOfInterest.getClue();
+    }
 }

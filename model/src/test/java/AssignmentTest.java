@@ -1,6 +1,7 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -96,6 +97,18 @@ public class AssignmentTest {
         assignment.setCurrentLocation(locationInEuropeTrail());
 
         assertThat(assignment.getPointOfInterest()).isEqualTo(madrid.pointsOfInterest());
+    }
+
+    @Test
+    @DisplayName("When investigating a point of interest, should provide a clue")
+    void investigatePointOfInterest() {
+        assignment.setCurrentLocation(locationInEuropeTrail());
+        PointOfInterest puertaDelSol = new PointOfInterest("Puerta del Sol");
+        puertaDelSol.setClue("Clue");
+
+        String clue = assignment.investigatePointOfInterest(puertaDelSol);
+
+        assertThat(clue).isEqualTo("Clue");
     }
 
 }
