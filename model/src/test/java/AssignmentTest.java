@@ -1,3 +1,4 @@
+import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
 import app.game.carmensandiego.model.action.GameAction;
@@ -14,6 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(MockitoExtension.class)
 public class AssignmentTest {
 
+    private final City buenosAires = CityMother.buenosAires();
+
     @Test
     @DisplayName("When asking for the actions, should receive the See connections action")
     void getActions_seeConnections() {
@@ -28,22 +31,21 @@ public class AssignmentTest {
     @DisplayName("When asking for the current location name, should receive the current location name from the City")
     void getCurrentLocationName() {
         Assignment assignment = new Assignment();
-        String cityName = "Buenos Aires";
-        assignment.setCurrentLocation(new City(cityName, "description"));
+        assignment.setCurrentLocation(buenosAires);
 
         String currentLocationName = assignment.getCurrentLocationName();
-        assertThat(currentLocationName).isEqualTo(cityName);
+        assertThat(currentLocationName).isEqualTo(buenosAires.name());
     }
 
     @Test
     @DisplayName("When asking for the current location description, should receive the current location description from the City")
     void getCurrentLocationDescription() {
         Assignment assignment = new Assignment();
-        String cityDescription = "Capital de Argentina";
-        assignment.setCurrentLocation(new City("Buenos Aires", cityDescription));
+
+        assignment.setCurrentLocation(buenosAires);
 
         String currentLocationDescription = assignment.getCurrentLocationDescription();
-        assertThat(currentLocationDescription).isEqualTo(cityDescription);
+        assertThat(currentLocationDescription).isEqualTo(buenosAires.description());
     }
 
 

@@ -1,9 +1,9 @@
 package app.game.carmensandiego;
 
 
+import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,17 +18,19 @@ public class GameTest {
 
     @Mock Output output;
 
+    private final City buenosAires = CityMother.buenosAires();
+
     @Test
     @DisplayName("When asking to for the name of the current location, the game should display it correctly")
     public void currentLocationName() {
         Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
-        String cityName = "Buenos Aires";
-        assignment.setCurrentLocation(new City(cityName, "Capital de Argentina"));
+
+        assignment.setCurrentLocation(buenosAires);
 
         game.currentLocationName();
 
-        verify(output).println(cityName);
+        verify(output).println(buenosAires.name());
     }
 
 
@@ -37,13 +39,11 @@ public class GameTest {
     public void currentLocationDescription() {
         Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
-        String cityName = "Buenos Aires";
-        String cityDescription = "Capital de Argentina";
-        assignment.setCurrentLocation(new City(cityName, cityDescription));
+        assignment.setCurrentLocation(buenosAires);
 
         game.currentLocationDescription();
 
-        verify(output).println(cityDescription);
+        verify(output).println(buenosAires.description());
     }
 
     @Test
@@ -59,11 +59,11 @@ public class GameTest {
     }
 
     @Test
-    @Disabled
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
     public void executeSeeConnectionsAction() {
         Assignment assignment = new Assignment();
         Game game = new Game(output, assignment);
+
 
         game.executeAction(1);
 

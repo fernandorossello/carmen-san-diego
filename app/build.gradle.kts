@@ -11,6 +11,7 @@ dependencies {
     testImplementation("org.mockito:mockito-junit-jupiter:5.5.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(project(":testFixtures"))
 
     implementation("com.google.guava:guava:31.1-jre")
     implementation("org.springframework.boot:spring-boot-starter:3.1.3")

@@ -21,6 +21,6 @@ public class Assignment {
     }
 
     public String getCurrentLocationDescription() {
-        return currentLocation.cityDescription();
+        return currentLocation.description();
     }
 }
