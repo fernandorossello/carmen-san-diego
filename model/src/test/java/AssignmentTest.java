@@ -15,6 +15,7 @@ import java.util.List;
 import static app.game.carmensandiego.fixtures.CityMother.*;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -92,7 +93,7 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the current location")
     void travel_updateCurrentLocation() {
-        assignment.setCurrentLocation(initialLocationMadrid());
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
 
         assignment.travelTo(londres);
 
@@ -102,7 +103,7 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the previous location with the current location")
     void travel_updatePreviousLocation() {
-        assignment.setCurrentLocation(initialLocationMadrid());
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
 
         assignment.travelTo(londres);
 
@@ -112,12 +113,23 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the city connections options from the investigation")
     void travel_updateCityConnectionsOptions() {
-        assignment.setCurrentLocation(initialLocationMadrid());
+        assignment.setCurrentLocation(madridFromBuenosAiresWithEuropeOptions());
         when(investigation.getMisleadingCities(3)).thenReturn(List.of(bangkok, tokio));
 
         assignment.travelTo(londres);
 
         assertThat(assignment.getAvailableConnections()).containsExactlyInAnyOrder(madrid, bangkok, tokio);
+    }
+
+    @Test
+    @DisplayName("When traveling to a city that is not in the options, should throw an exception")
+    void travel_toCityNotInOptions() {
+        assignment.setCurrentLocation(initialLocationMadrid());
+
+        assertThat(assignment.getAvailableConnections()).doesNotContain(buenosAires);
+        assertThatThrownBy(() -> assignment.travelTo(buenosAires))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("City is not in the available connections");
     }
 
 }

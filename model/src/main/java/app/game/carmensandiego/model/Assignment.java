@@ -36,6 +36,8 @@ public class Assignment {
     }
 
     public void travelTo(City city) {
+        isValidCity(city);
+
         CurrentLocation newLocation = CurrentLocation.builder()
                 .previousCity(currentLocation.getCurrentCity())
                 .currentCity(city)
@@ -44,5 +46,11 @@ public class Assignment {
         newLocation.addCityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES));
 
         this.currentLocation = newLocation;
+    }
+
+    private void isValidCity(City city) {
+        if(!getAvailableConnections().contains(city)) {
+            throw new IllegalArgumentException("City is not in the available connections");
+        }
     }
 }
