@@ -14,4 +14,9 @@ public class Assignment {
     }
 
     private final List<GameAction> actions;
+    private City currentLocation;
+
+    public String getCurrentLocationName() {
+        return currentLocation.name();
+    }
 }

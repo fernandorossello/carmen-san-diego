@@ -1,4 +1,5 @@
 package app.game.carmensandiego.model;
 
-public class City {
+public record City(String name) {
 }
+

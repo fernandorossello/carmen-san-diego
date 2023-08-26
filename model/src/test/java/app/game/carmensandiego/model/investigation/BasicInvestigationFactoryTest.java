@@ -2,8 +2,6 @@ package app.game.carmensandiego.model.investigation;
 
 import app.game.carmensandiego.model.CitiesRepository;
 import app.game.carmensandiego.model.City;
-import app.game.carmensandiego.model.investigation.Investigation;
-import app.game.carmensandiego.model.investigation.BasicInvestigationFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +26,12 @@ public class BasicInvestigationFactoryTest {
     @Test
     @DisplayName("When creating an investigation it should be created with a list of cities")
     void createInvestigation_withCities() {
-        when(citiesRepository.findAll()).thenReturn(Arrays.asList(new City(), new City(), new City(), new City()));
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                new City("Buenos Aires"),
+                new City("Madrid"),
+                new City("Londres"),
+                new City("Paris"))
+        );
 
         Investigation investigation = investigationFactory.create();
 

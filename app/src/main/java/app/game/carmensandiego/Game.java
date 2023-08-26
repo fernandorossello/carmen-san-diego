@@ -2,8 +2,6 @@ package app.game.carmensandiego;
 
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.action.GameAction;
-import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -35,5 +33,10 @@ public class Game {
     public void executeAction(int index) {
         String out = actions.get(index).execute();
         output.println(out);
+    }
+
+    public void currentLocationName() {
+        String cityName = assignment.getCurrentLocationName();
+        output.println(cityName);
     }
 }
