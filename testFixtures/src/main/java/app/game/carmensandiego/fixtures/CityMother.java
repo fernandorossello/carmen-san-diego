@@ -31,4 +31,8 @@ public class CityMother {
         return new City("Tokio", "Capital de Japón");
     }
 
+    public static City beijing() { return new City("Beijing", "Capital de China"); }
+
+    public static City nomPen() { return new City("Nom Pen", "Capital de Camboya"); }
+
 }

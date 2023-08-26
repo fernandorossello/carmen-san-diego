@@ -14,7 +14,6 @@ public class Assignment {
     public static final int AMOUNT_OF_MISLEADING_CITIES = 4;
     private CurrentLocation currentLocation;
     private final Investigation investigation;
-    private List<City> availableConnections;
 
     public String getCurrentLocationName() {
         return currentLocation.getCurrentCity().name();
@@ -25,9 +24,7 @@ public class Assignment {
     }
 
     public List<City> getAvailableConnections() {
-        List<City> availableConnections = new LinkedList<>();
-
-        return availableConnections;
+        return currentLocation.getAvailableConnections();
     }
 
     public void travelTo(City city) {
@@ -44,13 +41,6 @@ public class Assignment {
         if(!getAvailableConnections().contains(city)) {
             throw new IllegalArgumentException("City is not in the available connections");
         }
-    }
-    private boolean currentCityIsInTheTrail() {
-        return investigation.isInTrail(currentLocation.getCurrentCity());
-    }
-
-    private boolean isNotStartingCity() {
-        return currentLocation.getPreviousCity() != null;
     }
 
 }

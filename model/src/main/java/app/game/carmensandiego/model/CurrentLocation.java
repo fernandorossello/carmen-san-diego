@@ -33,10 +33,17 @@ public class CurrentLocation {
             availableConnections.add(nextInTrail);
         }
 
-        availableConnections.addAll(cityOptions.subList(0, CITIES_TO_SHOW - availableConnections.size()));
+        availableConnections.addAll(getMisleadingCities());
         Collections.shuffle(availableConnections, new Random(System.nanoTime())); // To prevent giving hints with the position of the cities
 
         return availableConnections;
+    }
+
+    private List<City> getMisleadingCities() {
+        return cityOptions.stream()
+                .filter(c -> !c.equals(currentCity))
+                .toList()
+                .subList(0, CITIES_TO_SHOW - availableConnections.size());
     }
 
     private boolean hasNextInTrail() {
