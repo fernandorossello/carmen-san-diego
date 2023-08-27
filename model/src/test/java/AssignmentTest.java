@@ -1,6 +1,6 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,6 +39,15 @@ public class AssignmentTest {
     @BeforeEach
     void setUp() {
         assignment = new Assignment(investigation);
+    }
+
+    @Test
+    @DisplayName("When creating an assignment, a current location should be set from the investigation")
+    void createAssignment() {
+        when(investigation.getOriginCity()).thenReturn(buenosAires);
+        Assignment assignment = new Assignment(investigation);
+
+        assertThat(assignment.getCurrentLocation().getCurrentCity()).isEqualTo(buenosAires);
     }
 
     @Test

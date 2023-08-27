@@ -1,5 +1,6 @@
 package app.game.carmensandiego.model;
 
+import app.game.carmensandiego.model.cities.City;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -1,8 +1,8 @@
 package app.game.carmensandiego.model.investigation;
 
 import app.game.carmensandiego.fixtures.CityMother;
-import app.game.carmensandiego.model.CitiesRepository;
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.cities.CitiesRepository;
+import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
 import org.junit.jupiter.api.BeforeEach;

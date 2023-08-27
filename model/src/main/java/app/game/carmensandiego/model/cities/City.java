@@ -1,5 +1,6 @@
-package app.game.carmensandiego.model;
+package app.game.carmensandiego.model.cities;
 
+import app.game.carmensandiego.model.PointOfInterest;
 import lombok.Builder;
 
 import java.util.List;

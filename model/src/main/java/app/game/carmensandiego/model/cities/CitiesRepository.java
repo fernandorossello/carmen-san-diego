@@ -1,4 +1,4 @@
-package app.game.carmensandiego.model;
+package app.game.carmensandiego.model.cities;
 
 import java.util.List;
 

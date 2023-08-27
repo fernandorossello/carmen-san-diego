@@ -1,7 +1,7 @@
 package app.game.carmensandiego.model.investigation;
 
 
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.cities.City;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,14 +15,18 @@ public class Investigation {
     private List<City> misleadingCities;
 
     public List<City> getMisleadingCities(int amount) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        return misleadingCities.subList(0, Math.min(amount, misleadingCities.size()));
     }
 
     public City getNextCityInTrail(City currentCity) {
-        throw new UnsupportedOperationException("Not implemented yet");
+        int index = trail.indexOf(currentCity);
+        if (index == trail.size() - 1) {
+            return null;
+        }
+        return trail.get(index + 1);
     }
 
-    public boolean isInTrail(City currentCity) {
-        throw new UnsupportedOperationException("Not implemented yet");
+    public City getOriginCity() {
+        return trail.get(0);
     }
 }

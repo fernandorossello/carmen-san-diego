@@ -1,14 +1,13 @@
 package app.game.carmensandiego.model.investigation;
 
-import app.game.carmensandiego.model.CitiesRepository;
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.cities.CitiesRepository;
+import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 @RequiredArgsConstructor
 public class BasicInvestigationFactory implements InvestigationFactory {

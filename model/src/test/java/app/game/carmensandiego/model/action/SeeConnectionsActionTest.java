@@ -1,7 +1,7 @@
 package app.game.carmensandiego.model.action;
 
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;

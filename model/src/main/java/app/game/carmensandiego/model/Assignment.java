@@ -1,5 +1,6 @@
 package app.game.carmensandiego.model;
 
+import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.investigation.Investigation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -7,12 +8,21 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
 public class Assignment {
 
     public static final int AMOUNT_OF_MISLEADING_CITIES = 4;
     private CurrentLocation currentLocation;
     private final Investigation investigation;
+
+    public Assignment(Investigation investigation) {
+        this.investigation = investigation;
+
+        this.currentLocation = CurrentLocation.builder()
+                .currentCity(investigation.getOriginCity())
+                .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
+                .nextInTrail(investigation.getNextCityInTrail(investigation.getOriginCity()))
+                .build();
+    }
 
     public String getCurrentLocationName() {
         return currentCity().name();

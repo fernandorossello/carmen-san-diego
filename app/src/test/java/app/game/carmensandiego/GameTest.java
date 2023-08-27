@@ -10,6 +10,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.util.List;
 
 import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
@@ -57,16 +58,17 @@ public class GameTest {
 
         game.displayActions();
 
+        verify(output).println("Acciones: ");
         verify(output).println("1. Ver conexiones");
     }
 
     @Test
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
-    public void executeSeeConnectionsAction() {
+    public void executeSeeConnectionsAction() throws IOException {
         when(assignment.getAvailableConnections()).thenReturn(List.of(madrid(), paris(), london(), rome()));
         Game game = new Game(output, assignment);
 
-        game.executeAction(SEE_CONNECTIONS);
+        game.executeAction(1);
 
         InOrder inOrder = inOrder(output);
         inOrder.verify(output).println("Conexiones: ");
