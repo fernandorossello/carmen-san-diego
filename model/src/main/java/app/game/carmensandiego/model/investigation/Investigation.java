@@ -20,6 +20,11 @@ public class Investigation {
 
     public City getNextCityInTrail(City currentCity) {
         int index = trail.indexOf(currentCity);
+
+        if (index == -1) {
+            return null;
+        }
+
         if (index == trail.size() - 1) {
             return null;
         }

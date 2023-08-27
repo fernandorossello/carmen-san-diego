@@ -47,6 +47,22 @@ class InvestigationTest {
     }
 
     @Test
+    @DisplayName("When getting the next city in the trail, if the city is the first one should return the next city correctly")
+    void getNextCityInTrail_firstCity() {
+        Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
+
+        assertThat(investigation.getNextCityInTrail(buenosAires())).isEqualTo(madrid());
+    }
+
+    @Test
+    @DisplayName("When getting the next city in the trail, if the city is not in the trail should return null")
+    void getNextCityInTrail_notInTrail() {
+        Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
+
+        assertThat(investigation.getNextCityInTrail(tokio())).isNull();
+    }
+
+    @Test
     @DisplayName("When getting the origin city, should return the first city in the trail")
     void getOriginCity() {
         Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
