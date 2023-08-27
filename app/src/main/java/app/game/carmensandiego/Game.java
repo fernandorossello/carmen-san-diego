@@ -4,7 +4,6 @@ import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.cities.City;
 
-import java.io.IOException;
 import java.util.List;
 
 
@@ -17,7 +16,9 @@ public class Game {
     }
 
     public void displayActions() {
+        output.println("#############################################");
         output.println("ACCIONES: ");
+        output.println("#############################################");
         output.println("1. Ver conexiones");
         output.println("2. Viajar");
         output.println("3. Investigar");

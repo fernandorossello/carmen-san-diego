@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.util.List;
 
-import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
 import static app.game.carmensandiego.fixtures.CityMother.*;
 import static org.mockito.Mockito.*;
 
@@ -58,11 +57,14 @@ public class GameTest {
 
         game.displayActions();
 
-        verify(output).println("ACCIONES: ");
-        verify(output).println("1. Ver conexiones");
-        verify(output).println("2. Viajar");
-        verify(output).println("3. Investigar");
-        verify(output).println("0. Salir");
+        InOrder inOrder = inOrder(output);
+        inOrder.verify(output).println("#############################################");
+        inOrder.verify(output).println("ACCIONES: ");
+        inOrder.verify(output).println("#############################################");
+        inOrder.verify(output).println("1. Ver conexiones");
+        inOrder.verify(output).println("2. Viajar");
+        inOrder.verify(output).println("3. Investigar");
+        inOrder.verify(output).println("0. Salir");
     }
 
     @Test
