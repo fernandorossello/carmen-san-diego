@@ -1,6 +1,5 @@
 package app.game.carmensandiego;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class ConsoleOutput implements Output {
@@ -13,10 +12,6 @@ public class ConsoleOutput implements Output {
     public String readInput() {
         Scanner sc = new Scanner(System.in);
         return sc.nextLine();
-    }
-
-    @Override
-    public void clear() throws IOException {
     }
 
 }

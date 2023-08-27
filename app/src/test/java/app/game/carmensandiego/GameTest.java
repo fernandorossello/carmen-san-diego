@@ -60,6 +60,9 @@ public class GameTest {
 
         verify(output).println("ACCIONES: ");
         verify(output).println("1. Ver conexiones");
+        verify(output).println("2. Viajar");
+        verify(output).println("3. Investigar");
+        verify(output).println("0. Salir");
     }
 
     @Test
@@ -100,7 +103,7 @@ public class GameTest {
         game.seePointOfInterest();
 
         InOrder inOrder = inOrder(output);
-        inOrder.verify(output).println("Puntos de interés: ");
+        inOrder.verify(output).println("PUNTOS DE INTERÉS: ");
         inOrder.verify(output).println("Puerta del Sol");
         inOrder.verify(output).println("Plaza Mayor");
         inOrder.verify(output).println("Palacio Real");
