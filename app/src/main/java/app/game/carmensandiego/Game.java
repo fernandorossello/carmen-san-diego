@@ -26,7 +26,7 @@ public class Game {
     }
 
     public void displayActions() {
-        output.println("Acciones: ");
+        output.println("ACCIONES: ");
         output.println("1. Ver conexiones");
         output.println("2. Viajar");
         output.println("3. Investigar");

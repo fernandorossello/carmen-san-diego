@@ -58,7 +58,7 @@ public class GameTest {
 
         game.displayActions();
 
-        verify(output).println("Acciones: ");
+        verify(output).println("ACCIONES: ");
         verify(output).println("1. Ver conexiones");
     }
 
@@ -71,7 +71,7 @@ public class GameTest {
         game.executeAction(1);
 
         InOrder inOrder = inOrder(output);
-        inOrder.verify(output).println("Conexiones: ");
+        inOrder.verify(output).println("CONEXIONES: ");
         inOrder.verify(output).println("Madrid");
         inOrder.verify(output).println("Paris");
         inOrder.verify(output).println("Londres");
