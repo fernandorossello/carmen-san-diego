@@ -25,13 +25,9 @@ public class CurrentLocation {
             return availableConnections;
         }
 
-        if (isNotStartingCity()) {
-            availableConnections.add(previousCity.get());
-        }
+        previousCity.ifPresent(availableConnections::add);
 
-        if (hasNextInTrail()) {
-            availableConnections.add(nextInTrail.get());
-        }
+        nextInTrail.ifPresent(availableConnections::add);
 
         availableConnections.addAll(getMisleadingCities());
         Collections.shuffle(availableConnections, new Random(System.nanoTime())); // To prevent giving hints with the position of the cities
@@ -46,11 +42,4 @@ public class CurrentLocation {
                 .subList(0, CITIES_TO_SHOW - availableConnections.size());
     }
 
-    private boolean hasNextInTrail() {
-        return nextInTrail.isPresent();
-    }
-
-    private boolean isNotStartingCity() {
-        return previousCity.isPresent();
-    }
 }
