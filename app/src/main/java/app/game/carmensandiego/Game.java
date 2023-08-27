@@ -33,19 +33,28 @@ public class Game {
         output.println("0. Salir");
     }
 
-    public void executeAction(int index) {
+    public void executeAction(int index) throws IOException {
         switch (index) {
             case 1:
+                output.clear();
                 List<City> connections = seeConnectionsAction.execute(assignment);
                 output.println("CONEXIONES: ");
                 connections.forEach(city -> output.println(city.name()));
                 break;
             case 2:
+                output.clear();
                 List<City> availableConnections = assignment.getAvailableConnections();
                 availableConnections.forEach(city -> output.println(city.name()));
                 String option = output.readInput();
                 City city = availableConnections.get(Integer.parseInt(option) - 1);
                 travelTo(city);
+                break;
+            case 3:
+                output.clear();
+                seePointOfInterest();
+                String optionPointOfInterest = output.readInput();
+                PointOfInterest pointOfInterest = assignment.getPointOfInterest().get(Integer.parseInt(optionPointOfInterest) - 1);
+                investigatePointOfInterest(pointOfInterest);
                 break;
             default:
                 throw new UnsupportedOperationException("Invalid action");
@@ -69,7 +78,7 @@ public class Game {
 
     public void seePointOfInterest() {
         List<PointOfInterest> pointOfInterest = assignment.getPointOfInterest();
-        output.println("Puntos de interés: ");
+        output.println("PUNTOS DE INTERÉS: ");
         pointOfInterest.forEach(p -> output.println(p.getName()));
     }
 
