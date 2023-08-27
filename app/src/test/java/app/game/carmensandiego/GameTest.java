@@ -2,6 +2,7 @@ package app.game.carmensandiego;
 
 
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.PointOfInterest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -101,5 +102,18 @@ public class GameTest {
         inOrder.verify(output).println("Puerta del Sol");
         inOrder.verify(output).println("Plaza Mayor");
         inOrder.verify(output).println("Palacio Real");
+    }
+
+    @Test
+    @DisplayName("When investigating a point of interest, should display the proper clue")
+    public void investigatePointOfInterest() {
+        Game game = new Game(output, assignment);
+        PointOfInterest pointOfInterest = new PointOfInterest("Puerta del Sol");
+        pointOfInterest.setClue("The best clue");
+        when(assignment.investigatePointOfInterest(pointOfInterest)).thenReturn(pointOfInterest.getClue());
+
+        game.investigatePointOfInterest(pointOfInterest);
+
+        verify(output).println("The best clue");
     }
 }

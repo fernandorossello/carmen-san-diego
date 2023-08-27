@@ -67,6 +67,12 @@ public class Game {
         pointOfInterest.forEach(p -> output.println(p.getName()));
     }
 
+    public void investigatePointOfInterest(PointOfInterest pointOfInterest) {
+        String clue = assignment.investigatePointOfInterest(pointOfInterest);
+
+        output.println(clue);
+    }
+
     public enum Actions {
 
         SEE_CONNECTIONS(1),
