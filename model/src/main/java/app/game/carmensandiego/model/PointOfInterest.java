@@ -8,6 +8,7 @@ import lombok.Setter;
 public class PointOfInterest {
 
     private final String name;
+
     @Setter
     @Getter
     private String clue;

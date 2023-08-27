@@ -51,6 +51,11 @@ public class Assignment {
     }
 
     public String investigatePointOfInterest(PointOfInterest pointOfInterest) {
-        return pointOfInterest.getClue();
+        String clue = pointOfInterest.getClue();
+
+        if (clue == null) {
+            return "No he visto al sospechoso por aquí";
+        }
+        return clue;
     }
 }

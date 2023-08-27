@@ -103,12 +103,23 @@ public class AssignmentTest {
     @DisplayName("When investigating a point of interest, should provide a clue")
     void investigatePointOfInterest() {
         assignment.setCurrentLocation(locationInEuropeTrail());
-        PointOfInterest puertaDelSol = new PointOfInterest("Puerta del Sol");
-        puertaDelSol.setClue("Clue");
+        PointOfInterest poi = new PointOfInterest("Puerta del Sol");
+        poi.setClue("Clue");
 
-        String clue = assignment.investigatePointOfInterest(puertaDelSol);
+        String clue = assignment.investigatePointOfInterest(poi);
 
         assertThat(clue).isEqualTo("Clue");
+    }
+
+    @Test
+    @DisplayName("When investigating a point of interest whithout a clue, should provide a proper message")
+    void investigatePointOfInterest_withoutClue() {
+        assignment.setCurrentLocation(locationInEuropeTrail());
+        PointOfInterest poi = new PointOfInterest("Puerta del Sol");
+
+        String clue = assignment.investigatePointOfInterest(poi);
+
+            assertThat(clue).isEqualTo("No he visto al sospechoso por aquí");
     }
 
 }

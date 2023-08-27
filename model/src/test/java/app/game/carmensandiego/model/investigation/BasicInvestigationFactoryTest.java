@@ -108,5 +108,4 @@ public class BasicInvestigationFactoryTest {
         assertThat(pois).allMatch(poi -> poi.getClue() == null);
     }
 
-
 }
