@@ -2,6 +2,7 @@ package app.game.carmensandiego;
 
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.City;
+import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.action.GameAction;
 import app.game.carmensandiego.model.action.SeeConnectionsAction;
 
@@ -58,6 +59,12 @@ public class Game {
     public void currentLocationDescription() {
         String cityDescription = assignment.getCurrentLocationDescription();
         output.println(cityDescription);
+    }
+
+    public void seePointOfInterest() {
+        List<PointOfInterest> pointOfInterest = assignment.getPointOfInterest();
+        output.println("Puntos de interés: ");
+        pointOfInterest.forEach(p -> output.println(p.getName()));
     }
 
     public enum Actions {

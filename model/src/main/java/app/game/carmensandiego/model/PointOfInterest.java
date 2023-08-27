@@ -7,6 +7,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class PointOfInterest {
 
+    @Getter
     private final String name;
 
     @Setter

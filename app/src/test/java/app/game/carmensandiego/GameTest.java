@@ -2,11 +2,10 @@ package app.game.carmensandiego;
 
 
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.CurrentLocation;
-import app.game.carmensandiego.model.investigation.Investigation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,18 +13,17 @@ import java.util.List;
 
 import static app.game.carmensandiego.Game.Actions.SEE_CONNECTIONS;
 import static app.game.carmensandiego.fixtures.CityMother.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class GameTest {
 
     @Mock private Output output;
-    @Mock private Investigation investigation;
-
-    @Mock private CurrentLocation currentLocation;
 
     @Mock private Assignment assignment;
+
+    public GameTest() {
+    }
 
 
     @Test
@@ -69,11 +67,12 @@ public class GameTest {
 
         game.executeAction(SEE_CONNECTIONS);
 
-        verify(output).println("Conexiones: ");
-        verify(output).println("Madrid");
-        verify(output).println("Paris");
-        verify(output).println("Londres");
-        verify(output).println("Roma");
+        InOrder inOrder = inOrder(output);
+        inOrder.verify(output).println("Conexiones: ");
+        inOrder.verify(output).println("Madrid");
+        inOrder.verify(output).println("Paris");
+        inOrder.verify(output).println("Londres");
+        inOrder.verify(output).println("Roma");
     }
 
     @Test
@@ -87,5 +86,20 @@ public class GameTest {
 
         verify(assignment).travelTo(london());
         verify(output).println("Bienvenido a Londres. Capital de Inglaterra");
+    }
+
+    @Test
+    @DisplayName("When asking to get points of interest, the game should print the correct names")
+    public void getPointOfInterest() {
+        when(assignment.getPointOfInterest()).thenReturn(madrid().pointsOfInterest());
+        Game game = new Game(output, assignment);
+
+        game.seePointOfInterest();
+
+        InOrder inOrder = inOrder(output);
+        inOrder.verify(output).println("Puntos de interés: ");
+        inOrder.verify(output).println("Puerta del Sol");
+        inOrder.verify(output).println("Plaza Mayor");
+        inOrder.verify(output).println("Palacio Real");
     }
 }
