@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static app.game.carmensandiego.fixtures.CityMother.beijing;
 import static app.game.carmensandiego.fixtures.CityMother.nomPen;
@@ -71,12 +72,12 @@ public class AssignmentTest {
 
     @Test
     @DisplayName("When traveling to a city, should update the previous location with the current location")
-    void travel_updatePreviousLocation() {;
+    void travel_updatePreviousLocation() {
         assignment.setCurrentLocation(locationInEuropeTrail());
 
         assignment.travelTo(london);
 
-        assertThat(assignment.getCurrentLocation().getPreviousCity()).isEqualTo(madrid);
+        assertThat(assignment.getCurrentLocation().getPreviousCity()).isEqualTo(Optional.of(madrid));
     }
 
     @Test

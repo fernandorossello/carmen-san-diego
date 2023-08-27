@@ -4,19 +4,18 @@ import app.game.carmensandiego.model.cities.City;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Builder
 @Getter
 public class CurrentLocation {
-
-    private final City previousCity;
+//TODO: Implement own builder to hide optionals setting complexity
+    @Builder.Default
+    private final Optional<City> previousCity = Optional.empty();
     private final City currentCity;
     private final List<City> cityOptions;
-    private final City nextInTrail;
+    @Builder.Default
+    private final Optional<City> nextInTrail = Optional.empty();
     private final boolean isInTheTrail;
     private final List<City> availableConnections = new LinkedList<>();
 
@@ -27,11 +26,11 @@ public class CurrentLocation {
         }
 
         if (isNotStartingCity()) {
-            availableConnections.add(previousCity);
+            availableConnections.add(previousCity.get());
         }
 
         if (hasNextInTrail()) {
-            availableConnections.add(nextInTrail);
+            availableConnections.add(nextInTrail.get());
         }
 
         availableConnections.addAll(getMisleadingCities());
@@ -48,10 +47,10 @@ public class CurrentLocation {
     }
 
     private boolean hasNextInTrail() {
-        return nextInTrail != null;
+        return nextInTrail.isPresent();
     }
 
     private boolean isNotStartingCity() {
-        return previousCity != null;
+        return previousCity.isPresent();
     }
 }

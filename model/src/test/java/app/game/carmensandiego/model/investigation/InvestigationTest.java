@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static app.game.carmensandiego.fixtures.CityMother.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,7 +36,7 @@ class InvestigationTest {
     void getNextCityInTrail() {
         Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
 
-        assertThat(investigation.getNextCityInTrail(madrid())).isEqualTo(london());
+        assertThat(investigation.getNextCityInTrail(madrid())).isEqualTo(Optional.of(london()));
     }
 
     @Test
@@ -43,7 +44,7 @@ class InvestigationTest {
     void getNextCityInTrail_lastCity() {
         Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
 
-        assertThat(investigation.getNextCityInTrail(paris())).isNull();
+        assertThat(investigation.getNextCityInTrail(paris())).isEqualTo(Optional.empty());
     }
 
     @Test
@@ -51,7 +52,7 @@ class InvestigationTest {
     void getNextCityInTrail_firstCity() {
         Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
 
-        assertThat(investigation.getNextCityInTrail(buenosAires())).isEqualTo(madrid());
+        assertThat(investigation.getNextCityInTrail(buenosAires())).isEqualTo(Optional.of(madrid()));
     }
 
     @Test
@@ -59,7 +60,7 @@ class InvestigationTest {
     void getNextCityInTrail_notInTrail() {
         Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
 
-        assertThat(investigation.getNextCityInTrail(tokio())).isNull();
+        assertThat(investigation.getNextCityInTrail(tokio())).isEqualTo(Optional.empty());
     }
 
     @Test

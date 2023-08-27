@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Builder
 @Getter
@@ -18,17 +19,17 @@ public class Investigation {
         return misleadingCities.subList(0, Math.min(amount, misleadingCities.size()));
     }
 
-    public City getNextCityInTrail(City currentCity) {
+    public Optional<City> getNextCityInTrail(City currentCity) {
         int index = trail.indexOf(currentCity);
 
         if (index == -1) {
-            return null;
+            return Optional.empty();
         }
 
         if (index == trail.size() - 1) {
-            return null;
+            return Optional.empty();
         }
-        return trail.get(index + 1);
+        return Optional.of(trail.get(index + 1));
     }
 
     public City getOriginCity() {

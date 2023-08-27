@@ -3,9 +3,9 @@ package app.game.carmensandiego.model;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.investigation.Investigation;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 public class Assignment {
@@ -39,7 +39,7 @@ public class Assignment {
     public void travelTo(City city) {
         isValidCity(city);
         this.currentLocation = CurrentLocation.builder()
-                .previousCity(currentCity())
+                .previousCity(Optional.of(currentCity()))
                 .currentCity(city)
                 .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
                 .nextInTrail(investigation.getNextCityInTrail(city))
