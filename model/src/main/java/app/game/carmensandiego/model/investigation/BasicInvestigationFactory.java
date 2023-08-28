@@ -38,7 +38,6 @@ public class BasicInvestigationFactory implements InvestigationFactory {
 
     private void setCluesForTrail(List<City> trail) {
         City current = trail.get(trail.size() - 1);
-        current.pointsOfInterest().forEach(poi -> poi.setClue("Carmen"));
         setCluesForLastCityOnTrail(current);
         for (int i = trail.size() - 2; i >= 0; i--) {
             City previous = current;
@@ -46,7 +45,6 @@ public class BasicInvestigationFactory implements InvestigationFactory {
             List<String> clues = previous.clues();
             for(int j = 0; j < current.pointsOfInterest().size(); j++) {
                 PointOfInterest poi = current.pointsOfInterest().get(j);
-                poi.setClue(clues.get(j));
                 poi.setStatement(new SuspectSeenStatement(clues.get(j)));
             }
         }

@@ -13,10 +13,6 @@ public class PointOfInterest {
 
     @Setter
     @Getter
-    private String clue;
-
-    @Setter
-    @Getter
     private Statement statement;
 
 

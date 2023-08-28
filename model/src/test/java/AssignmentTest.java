@@ -118,7 +118,6 @@ public class AssignmentTest {
         assignment.setCurrentLocation(locationInEuropeTrail());
         PointOfInterest poi = new PointOfInterest("Puerta del Sol");
         SuspectSeenStatement expectedStatement = new SuspectSeenStatement("The best clue");
-        poi.setClue("Clue");
         poi.setStatement(expectedStatement);
 
         Statement clue = assignment.investigatePointOfInterest(poi);
