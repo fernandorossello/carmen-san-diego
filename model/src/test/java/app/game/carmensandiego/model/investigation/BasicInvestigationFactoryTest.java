@@ -74,8 +74,8 @@ public class BasicInvestigationFactoryTest {
     }
 
     @Test
-    @DisplayName("When crating an investigation it should add the proper clues to the cities, based on the next city")
-    void createInvestigation_withClues() {
+    @DisplayName("When crating an investigation it should add the proper statements to the cities, based on the next city")
+    void createInvestigation_withStatements() {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.paris(),
                 CityMother.madrid(),
@@ -85,14 +85,22 @@ public class BasicInvestigationFactoryTest {
         Investigation investigation = investigationFactory.create();
 
         List<City> trail = investigation.getTrail();
-        assertThat(trail.get(0).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Londres");
-        assertThat(trail.get(1).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Paris");
-        assertThat(trail.get(2).pointsOfInterest().get(0).getStatement().toString()).isEqualTo("Carmen");
+        Statement statement1 = trail.get(0).pointsOfInterest().get(0).getStatement();
+        assertThat(statement1.toString()).isEqualTo("Se fue para Londres");
+        assertThat(statement1).isInstanceOf(SuspectSeenStatement.class);
+
+        Statement statement2 = trail.get(1).pointsOfInterest().get(0).getStatement();
+        assertThat(statement2.toString()).isEqualTo("Se fue para Paris");
+        assertThat(statement2).isInstanceOf(SuspectSeenStatement.class);
+
+        Statement statement3 = trail.get(2).pointsOfInterest().get(0).getStatement();
+        assertThat(statement3.toString()).isEqualTo("Carmen");
+        assertThat(statement3).isInstanceOf(SuspectFoundStatement.class);
     }
 
     @Test
-    @DisplayName("When crating an investigation should add a clue of type SuspectNotSeen to the misleading cities")
-    void createInvestigation_withCluesForMisleadingCities() {
+    @DisplayName("When crating an investigation should add a statement of type SuspectNotSeen to the misleading cities")
+    void createInvestigation_withStatementsForMisleadingCities() {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.paris(),
                 CityMother.madrid(),
@@ -109,8 +117,8 @@ public class BasicInvestigationFactoryTest {
     }
 
     @Test
-    @DisplayName("When creating an investigation should add a clue of type SuspectFound to one of the pois in the last city in the trail")
-    void createInvestigation_withClueForLastCity() {
+    @DisplayName("When creating an investigation should add a statement of type SuspectFound to one of the pois in the last city in the trail")
+    void createInvestigation_withStatementForLastCity() {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.paris(),
                 CityMother.madrid(),

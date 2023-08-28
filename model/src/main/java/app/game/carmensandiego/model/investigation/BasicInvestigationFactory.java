@@ -47,6 +47,7 @@ public class BasicInvestigationFactory implements InvestigationFactory {
             for(int j = 0; j < current.pointsOfInterest().size(); j++) {
                 PointOfInterest poi = current.pointsOfInterest().get(j);
                 poi.setClue(clues.get(j));
+                poi.setStatement(new SuspectSeenStatement(clues.get(j)));
             }
         }
     }
