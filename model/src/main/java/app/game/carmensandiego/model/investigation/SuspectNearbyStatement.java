@@ -1,8 +1,8 @@
 package app.game.carmensandiego.model.investigation;
 
-public class SuspectNotSeenClue implements Clue {
+public class SuspectNearbyStatement implements Statement {
     @Override
-    public String getTestimony() {
+    public String toString() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

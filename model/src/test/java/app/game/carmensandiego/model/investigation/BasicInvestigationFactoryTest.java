@@ -87,7 +87,7 @@ public class BasicInvestigationFactoryTest {
         List<City> trail = investigation.getTrail();
         assertThat(trail.get(0).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Londres");
         assertThat(trail.get(1).pointsOfInterest().get(0).getClue()).isEqualTo("Se fue para Paris");
-        assertThat(trail.get(2).pointsOfInterest().get(0).getClue()).isEqualTo("Carmen");
+        assertThat(trail.get(2).pointsOfInterest().get(0).getStatement().toString()).isEqualTo("Carmen");
     }
 
     @Test
@@ -105,8 +105,25 @@ public class BasicInvestigationFactoryTest {
         List<City> cities = investigation.getMisleadingCities();
         List<PointOfInterest> pois = cities.stream().flatMap(c -> c.pointsOfInterest().stream()).toList();
 
-        //assertThat(pois).allMatch(poi -> poi.getClue() == null);
-        assertThat(pois).allMatch(poi -> poi.getClue2() instanceof SuspectNotSeenClue);
+        assertThat(pois).allMatch(poi -> poi.getStatement() instanceof SuspectNotSeenStatement);
+    }
+
+    @Test
+    @DisplayName("When creating an investigation should add a clue of type SuspectFound to one of the pois in the last city in the trail")
+    void createInvestigation_withClueForLastCity() {
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                CityMother.paris(),
+                CityMother.madrid(),
+                CityMother.london())
+        );
+
+        Investigation investigation = investigationFactory.create();
+
+        List<Statement> statements = investigation.getTrail().get(2).pointsOfInterest().stream().map(PointOfInterest::getStatement).toList();
+
+        assertThat(statements.get(0)).isInstanceOf(SuspectFoundStatement.class);
+        assertThat(statements.get(1)).isInstanceOf(SuspectNearbyStatement.class);
+        assertThat(statements.get(2)).isInstanceOf(SuspectNearbyStatement.class);
     }
 
 }

@@ -31,14 +31,15 @@ public class BasicInvestigationFactory implements InvestigationFactory {
     }
 
     private void setCluesForMisleadingCities(List<City> otherCities) {
-        SuspectNotSeenClue suspectNotSeenClue = new SuspectNotSeenClue();
+        SuspectNotSeenStatement suspectNotSeenClue = new SuspectNotSeenStatement();
         otherCities.forEach(c -> c.pointsOfInterest()
-                .forEach(pointOfInterest -> pointOfInterest.setClue2(suspectNotSeenClue)));
+                .forEach(pointOfInterest -> pointOfInterest.setStatement(suspectNotSeenClue)));
     }
 
     private void setCluesForTrail(List<City> trail) {
         City current = trail.get(trail.size() - 1);
         current.pointsOfInterest().forEach(poi -> poi.setClue("Carmen"));
+        setCluesForLastCityOnTrail(current);
         for (int i = trail.size() - 2; i >= 0; i--) {
             City previous = current;
             current = trail.get(i);
@@ -47,6 +48,15 @@ public class BasicInvestigationFactory implements InvestigationFactory {
                 PointOfInterest poi = current.pointsOfInterest().get(j);
                 poi.setClue(clues.get(j));
             }
+        }
+    }
+
+    private static void setCluesForLastCityOnTrail(City current) {
+        current.pointsOfInterest().get(0).setStatement(new SuspectFoundStatement());
+        SuspectNearbyStatement suspectNearbyClue = new SuspectNearbyStatement();
+        for(int i = 1; i < current.pointsOfInterest().size(); i++) {
+            PointOfInterest poi = current.pointsOfInterest().get(i);
+            poi.setStatement(suspectNearbyClue);
         }
     }
 
