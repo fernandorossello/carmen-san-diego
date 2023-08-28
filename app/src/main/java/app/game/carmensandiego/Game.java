@@ -4,8 +4,11 @@ import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.statement.Statement;
+import app.game.carmensandiego.model.statement.SuspectFoundStatement;
 
 import java.util.List;
+
+import static java.lang.Thread.sleep;
 
 
 public class Game {
@@ -26,7 +29,7 @@ public class Game {
         output.println("0. Salir");
     }
 
-    public void executeAction(int index) {
+    public void executeAction(int index) throws InterruptedException {
         switch (index) {
             case 1 -> {
                 output.println("CONEXIONES: ");
@@ -44,7 +47,24 @@ public class Game {
                 seePointOfInterest();
                 String optionPointOfInterest = output.readInput();
                 PointOfInterest pointOfInterest = assignment.getPointOfInterest().get(Integer.parseInt(optionPointOfInterest) - 1);
-                investigatePointOfInterest(pointOfInterest);
+                Statement statement = investigatePointOfInterest(pointOfInterest);
+                if(statement instanceof SuspectFoundStatement) {
+                    output.println("");
+                    output.println("");
+                    output.println("¡FELICIDADES! HAS ENCONTRADO A CARMEN SANDIEGO");
+                    output.println("¡HAS GANADO!");
+                    sleep(5000);
+                    output.println("");
+                    output.println("");
+                    output.println("");
+                    output.println("");
+                    output.println("");
+                    output.println("");
+                    System.exit(0);
+                } else {
+                    output.println(statement.toString());
+                }
+
             }
             default -> throw new UnsupportedOperationException("Invalid action");
         }
@@ -71,10 +91,8 @@ public class Game {
         pointOfInterest.forEach(p -> output.println(p.getName()));
     }
 
-    public void investigatePointOfInterest(PointOfInterest pointOfInterest) {
-        Statement statement = assignment.investigatePointOfInterest(pointOfInterest);
-
-        output.println(statement.toString());
+    public Statement investigatePointOfInterest(PointOfInterest pointOfInterest) {
+        return assignment.investigatePointOfInterest(pointOfInterest);
     }
 
     public enum Actions {

@@ -12,7 +12,7 @@ public class GameManager {
     private final Output output;
     private final InvestigationFactory investigationFactory;
 
-    public void play() throws IOException {
+    public void play() throws IOException, InterruptedException {
         Game game = initGame();
 
         displayGreetings();

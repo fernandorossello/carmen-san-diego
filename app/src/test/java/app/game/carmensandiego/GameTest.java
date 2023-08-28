@@ -71,7 +71,7 @@ public class GameTest {
 
     @Test
     @DisplayName("When asking to execute SeeConnections, the game should execute the expected action")
-    public void executeSeeConnectionsAction() throws IOException {
+    public void executeSeeConnectionsAction() throws InterruptedException {
         when(assignment.getAvailableConnections()).thenReturn(List.of(madrid(), paris(), london(), rome()));
         Game game = new Game(output, assignment);
 
@@ -111,18 +111,5 @@ public class GameTest {
         inOrder.verify(output).println("Puerta del Sol");
         inOrder.verify(output).println("Plaza Mayor");
         inOrder.verify(output).println("Palacio Real");
-    }
-
-    @Test
-    @DisplayName("When investigating a point of interest, should display the proper clue")
-    public void investigatePointOfInterest() {
-        Game game = new Game(output, assignment);
-        PointOfInterest pointOfInterest = new PointOfInterest("Puerta del Sol");
-        Statement statement = new SuspectSeenStatement("The best clue");
-        when(assignment.investigatePointOfInterest(pointOfInterest)).thenReturn(statement);
-
-        game.investigatePointOfInterest(pointOfInterest);
-
-        verify(output).println("The best clue");
     }
 }
