@@ -2,7 +2,7 @@ package app.game.carmensandiego.model;
 
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.investigation.Investigation;
-import app.game.carmensandiego.model.investigation.Statement;
+import app.game.carmensandiego.model.statement.Statement;
 import lombok.Data;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package app.game.carmensandiego;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.cities.City;
-import app.game.carmensandiego.model.investigation.Statement;
+import app.game.carmensandiego.model.statement.Statement;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package app.game.carmensandiego.model;
 
-import app.game.carmensandiego.model.investigation.Statement;
+import app.game.carmensandiego.model.statement.Statement;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

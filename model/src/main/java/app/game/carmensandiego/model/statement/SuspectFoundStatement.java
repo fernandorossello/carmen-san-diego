@@ -1,4 +1,4 @@
-package app.game.carmensandiego.model.investigation;
+package app.game.carmensandiego.model.statement;
 
 public class SuspectFoundStatement implements Statement {
     @Override

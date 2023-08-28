@@ -5,6 +5,7 @@ import app.game.carmensandiego.model.cities.CitiesRepository;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
+import app.game.carmensandiego.model.statement.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

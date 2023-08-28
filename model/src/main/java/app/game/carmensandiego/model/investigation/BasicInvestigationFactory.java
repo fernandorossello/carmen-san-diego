@@ -4,6 +4,10 @@ import app.game.carmensandiego.model.cities.CitiesRepository;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
+import app.game.carmensandiego.model.statement.SuspectFoundStatement;
+import app.game.carmensandiego.model.statement.SuspectNearbyStatement;
+import app.game.carmensandiego.model.statement.SuspectNotSeenStatement;
+import app.game.carmensandiego.model.statement.SuspectSeenStatement;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collections;
