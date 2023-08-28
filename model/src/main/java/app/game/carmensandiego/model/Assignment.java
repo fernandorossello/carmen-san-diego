@@ -2,6 +2,7 @@ package app.game.carmensandiego.model;
 
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.investigation.Investigation;
+import app.game.carmensandiego.model.investigation.Statement;
 import lombok.Data;
 
 import java.util.List;
@@ -60,12 +61,7 @@ public class Assignment {
         return currentLocation.getCurrentCity();
     }
 
-    public String investigatePointOfInterest(PointOfInterest pointOfInterest) {
-        String clue = pointOfInterest.getClue();
-
-        if (clue == null) {
-            return "No he visto al sospechoso por aquí";
-        }
-        return clue;
+    public Statement investigatePointOfInterest(PointOfInterest pointOfInterest) {
+        return pointOfInterest.getStatement();
     }
 }

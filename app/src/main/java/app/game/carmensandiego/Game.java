@@ -3,6 +3,7 @@ package app.game.carmensandiego;
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.cities.City;
+import app.game.carmensandiego.model.investigation.Statement;
 
 import java.util.List;
 
@@ -71,9 +72,9 @@ public class Game {
     }
 
     public void investigatePointOfInterest(PointOfInterest pointOfInterest) {
-        String clue = assignment.investigatePointOfInterest(pointOfInterest);
+        Statement statement = assignment.investigatePointOfInterest(pointOfInterest);
 
-        output.println(clue);
+        output.println(statement.toString());
     }
 
     public enum Actions {

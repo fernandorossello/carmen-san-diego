@@ -3,6 +3,8 @@ package app.game.carmensandiego;
 
 import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.PointOfInterest;
+import app.game.carmensandiego.model.investigation.Statement;
+import app.game.carmensandiego.model.investigation.SuspectSeenStatement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -116,8 +118,8 @@ public class GameTest {
     public void investigatePointOfInterest() {
         Game game = new Game(output, assignment);
         PointOfInterest pointOfInterest = new PointOfInterest("Puerta del Sol");
-        pointOfInterest.setClue("The best clue");
-        when(assignment.investigatePointOfInterest(pointOfInterest)).thenReturn(pointOfInterest.getClue());
+        Statement statement = new SuspectSeenStatement("The best clue");
+        when(assignment.investigatePointOfInterest(pointOfInterest)).thenReturn(statement);
 
         game.investigatePointOfInterest(pointOfInterest);
 

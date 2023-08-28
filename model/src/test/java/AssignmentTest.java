@@ -3,6 +3,9 @@ import app.game.carmensandiego.model.Assignment;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.investigation.Investigation;
+import app.game.carmensandiego.model.investigation.Statement;
+import app.game.carmensandiego.model.investigation.SuspectNotSeenStatement;
+import app.game.carmensandiego.model.investigation.SuspectSeenStatement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -114,22 +117,13 @@ public class AssignmentTest {
     void investigatePointOfInterest() {
         assignment.setCurrentLocation(locationInEuropeTrail());
         PointOfInterest poi = new PointOfInterest("Puerta del Sol");
+        SuspectSeenStatement expectedStatement = new SuspectSeenStatement("The best clue");
         poi.setClue("Clue");
+        poi.setStatement(expectedStatement);
 
-        String clue = assignment.investigatePointOfInterest(poi);
+        Statement clue = assignment.investigatePointOfInterest(poi);
 
-        assertThat(clue).isEqualTo("Clue");
-    }
-
-    @Test
-    @DisplayName("When investigating a point of interest whithout a clue, should provide a proper message")
-    void investigatePointOfInterest_withoutClue() {
-        assignment.setCurrentLocation(locationInEuropeTrail());
-        PointOfInterest poi = new PointOfInterest("Puerta del Sol");
-
-        String clue = assignment.investigatePointOfInterest(poi);
-
-            assertThat(clue).isEqualTo("No he visto al sospechoso por aquí");
+        assertThat(clue).isEqualTo(expectedStatement);
     }
 
 }
