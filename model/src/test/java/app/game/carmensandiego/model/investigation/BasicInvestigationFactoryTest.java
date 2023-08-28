@@ -91,7 +91,7 @@ public class BasicInvestigationFactoryTest {
     }
 
     @Test
-    @DisplayName("When crating an investigation it should not add clue to the misleading cities")
+    @DisplayName("When crating an investigation should add a clue of type SuspectNotSeen to the misleading cities")
     void createInvestigation_withCluesForMisleadingCities() {
         when(citiesRepository.findAll()).thenReturn(Arrays.asList(
                 CityMother.paris(),
@@ -105,7 +105,8 @@ public class BasicInvestigationFactoryTest {
         List<City> cities = investigation.getMisleadingCities();
         List<PointOfInterest> pois = cities.stream().flatMap(c -> c.pointsOfInterest().stream()).toList();
 
-        assertThat(pois).allMatch(poi -> poi.getClue() == null);
+        //assertThat(pois).allMatch(poi -> poi.getClue() == null);
+        assertThat(pois).allMatch(poi -> poi.getClue2() instanceof SuspectNotSeenClue);
     }
 
 }

@@ -11,17 +11,18 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class BasicInvestigationFactory implements InvestigationFactory {
-    private static final int AMOUNT_OF_COUNTRIES = 3;
+    private static final int AMOUNT_OF_CITIES = 3;
     private final CitiesRepository citiesRepository;
     private final RandomProvider randomProvider;
     @Override
     public Investigation create() {
         List<City> allCities = citiesRepository.findAll();
         Collections.shuffle(allCities, randomProvider.getRnd());
-        List<City> trail = allCities.subList(0, AMOUNT_OF_COUNTRIES);
-        List<City> otherCities = allCities.subList(AMOUNT_OF_COUNTRIES, allCities.size());
+        List<City> trail = allCities.subList(0, AMOUNT_OF_CITIES);
+        List<City> otherCities = allCities.subList(AMOUNT_OF_CITIES, allCities.size());
 
         setCluesForTrail(trail);
+        setCluesForMisleadingCities(otherCities);
 
         return new Investigation.InvestigationBuilder()
                 .trail(trail)
@@ -29,7 +30,13 @@ public class BasicInvestigationFactory implements InvestigationFactory {
                 .build();
     }
 
-    private static void setCluesForTrail(List<City> trail) {
+    private void setCluesForMisleadingCities(List<City> otherCities) {
+        SuspectNotSeenClue suspectNotSeenClue = new SuspectNotSeenClue();
+        otherCities.forEach(c -> c.pointsOfInterest()
+                .forEach(pointOfInterest -> pointOfInterest.setClue2(suspectNotSeenClue)));
+    }
+
+    private void setCluesForTrail(List<City> trail) {
         City current = trail.get(trail.size() - 1);
         current.pointsOfInterest().forEach(poi -> poi.setClue("Carmen"));
         for (int i = trail.size() - 2; i >= 0; i--) {
