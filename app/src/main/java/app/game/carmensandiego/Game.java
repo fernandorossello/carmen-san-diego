@@ -95,6 +95,10 @@ public class Game {
         return assignment.investigatePointOfInterest(pointOfInterest);
     }
 
+    public boolean isTimeOver() {
+        return assignment.isTimeOver();
+    }
+
     public enum Actions {
 
         SEE_CONNECTIONS(1),

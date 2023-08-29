@@ -17,7 +17,12 @@ public class Config {
 
     @Bean
     public GameConfiguration gameConfiguration() {
-        return GameConfiguration.builder().numberOfCitiesInTrail(3).build();
+        int numberOfCitiesInTrail = 3;
+        int dueHours = numberOfCitiesInTrail * (4 + 8) + 8;
+        return GameConfiguration.builder()
+                .numberOfCitiesInTrail(numberOfCitiesInTrail)
+                .dueHours(dueHours)
+                .build();
     }
 
     @Bean

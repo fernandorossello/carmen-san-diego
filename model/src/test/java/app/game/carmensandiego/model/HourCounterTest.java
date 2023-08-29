@@ -34,7 +34,7 @@ class HourCounterTest {
     void timeUp() {
         HourCounter hourCounter = new HourCounter(0);
 
-        assertTrue(hourCounter.isTimeUp());
+        assertTrue(hourCounter.isTimeOver());
     }
 
     @Test
@@ -42,6 +42,6 @@ class HourCounterTest {
     void timeUp_false() {
         HourCounter hourCounter = new HourCounter(1);
 
-        assertFalse(hourCounter.isTimeUp());
+        assertFalse(hourCounter.isTimeOver());
     }
 }

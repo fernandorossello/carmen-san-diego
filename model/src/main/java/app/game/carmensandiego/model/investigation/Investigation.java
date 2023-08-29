@@ -16,10 +16,6 @@ public class Investigation {
     private List<City> misleadingCities;
     private int dueHours;
 
-    public List<City> getMisleadingCities(int amount) {
-        return misleadingCities.subList(0, Math.min(amount, misleadingCities.size()));
-    }
-
     public Optional<City> getNextCityInTrail(City currentCity) {
         int index = trail.indexOf(currentCity);
 

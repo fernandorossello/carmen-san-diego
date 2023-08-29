@@ -137,4 +137,18 @@ public class BasicInvestigationFactoryTest {
         assertThat(statements.get(2)).isInstanceOf(SuspectNearbyStatement.class);
     }
 
+    @Test
+    @DisplayName("When creating an investigation, should create it with the amount of due hours from the config")
+    void createInvestigation_withHoursToSpend() {
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                CityMother.paris(),
+                CityMother.madrid(),
+                CityMother.london())
+        );
+
+        Investigation investigation = investigationFactory.create(gameConfiguration);
+
+        assertThat(investigation.getHoursToSpend()).isEqualTo(10);
+    }
+
 }

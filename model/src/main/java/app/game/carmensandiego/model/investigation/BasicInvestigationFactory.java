@@ -31,6 +31,7 @@ public class BasicInvestigationFactory implements InvestigationFactory {
         return new Investigation.InvestigationBuilder()
                 .trail(trail)
                 .misleadingCities(otherCities)
+                .dueHours(gameConfig.getDueHours())
                 .build();
     }
 

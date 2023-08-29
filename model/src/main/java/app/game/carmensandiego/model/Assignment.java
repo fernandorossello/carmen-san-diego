@@ -72,7 +72,7 @@ public class Assignment {
         return pointOfInterest.getStatement();
     }
 
-    public boolean isTimeUp() {
-        return hourCounter.isTimeUp();
+    public boolean isTimeOver() {
+        return hourCounter.isTimeOver();
     }
 }

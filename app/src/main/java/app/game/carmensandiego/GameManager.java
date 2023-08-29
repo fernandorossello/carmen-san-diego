@@ -6,15 +6,13 @@ import app.game.carmensandiego.model.investigation.Investigation;
 import app.game.carmensandiego.model.investigation.InvestigationFactory;
 import lombok.RequiredArgsConstructor;
 
-import java.io.IOException;
-
 @RequiredArgsConstructor
 public class GameManager {
     private final Output output;
     private final InvestigationFactory investigationFactory;
     private final GameConfiguration config;
 
-    public void play() throws IOException, InterruptedException {
+    public void play() throws InterruptedException {
         Game game = initGame(config);
 
         displayGreetings();
@@ -23,9 +21,24 @@ public class GameManager {
         int action = readOption();
         while (action != 0) {
             game.executeAction(action);
+
+            if(game.isTimeOver()) {
+                displayGameOver();
+                break;
+            }
+
             game.displayActions();
             action = readOption();
         }
+    }
+
+    private void displayGameOver() {
+        output.println("#############################################");
+        output.println("#############################################");
+        output.println("Ha pasado demasiado tiempo y la persona que venías siguiendo logró escapar");
+        output.println("Mejor suerte la próxima vez");
+        output.println("#############################################");
+        output.println("#############################################");
     }
 
     private int readOption() {

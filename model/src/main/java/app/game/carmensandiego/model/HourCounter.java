@@ -15,7 +15,7 @@ public class HourCounter {
         this.hoursLeft -= hours;
     }
 
-    public boolean isTimeUp() {
+    public boolean isTimeOver() {
         return hoursLeft <= 0;
     }
 }

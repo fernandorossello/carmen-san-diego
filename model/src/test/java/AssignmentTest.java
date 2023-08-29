@@ -132,10 +132,10 @@ public class AssignmentTest {
     @Test
     @DisplayName("When the hour counter says time is up, assignment should say time is up")
     void isTimeUp() {
-        when(hourCounter.isTimeUp()).thenReturn(true);
+        when(hourCounter.isTimeOver()).thenReturn(true);
         assignment.setHourCounter(hourCounter);
 
-        assertThat(assignment.isTimeUp()).isTrue();
+        assertThat(assignment.isTimeOver()).isTrue();
     }
 
     @Test

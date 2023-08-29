@@ -2,9 +2,6 @@ package app.game.carmensandiego;
 
 
 import app.game.carmensandiego.model.Assignment;
-import app.game.carmensandiego.model.PointOfInterest;
-import app.game.carmensandiego.model.statement.Statement;
-import app.game.carmensandiego.model.statement.SuspectSeenStatement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,10 +9,10 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.IOException;
 import java.util.List;
 
 import static app.game.carmensandiego.fixtures.CityMother.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -24,9 +21,6 @@ public class GameTest {
     @Mock private Output output;
 
     @Mock private Assignment assignment;
-
-    public GameTest() {
-    }
 
 
     @Test
@@ -111,5 +105,16 @@ public class GameTest {
         inOrder.verify(output).println("Puerta del Sol");
         inOrder.verify(output).println("Plaza Mayor");
         inOrder.verify(output).println("Palacio Real");
+    }
+
+    @Test
+    @DisplayName("When asking if time is over, should get the info from the assignment")
+    public void isTimeOver() {
+        Game game = new Game(output, assignment);
+        when(assignment.isTimeOver()).thenReturn(true);
+
+        game.isTimeOver();
+
+        assertThat(game.isTimeOver()).isTrue();
     }
 }
