@@ -14,6 +14,7 @@ public class Investigation {
 
     private List<City> trail;
     private List<City> misleadingCities;
+    private int dueHours;
 
     public List<City> getMisleadingCities(int amount) {
         return misleadingCities.subList(0, Math.min(amount, misleadingCities.size()));

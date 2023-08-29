@@ -124,4 +124,14 @@ public class AssignmentTest {
         assertThat(clue).isEqualTo(expectedStatement);
     }
 
+    @Test
+    @DisplayName("When creating an assignment, should set the hours left from the investigation deadline")
+    void createAssignment_setHoursLeft() {
+        when(investigation.getDueHours()).thenReturn(10);
+
+        Assignment assignment = new Assignment(investigation);
+
+        assertThat(assignment.isTimeUp()).isFalse();
+    }
+
 }

@@ -13,6 +13,7 @@ public class Assignment {
 
     private CurrentLocation currentLocation;
     private final Investigation investigation;
+    private int hoursLeft;
 
     public Assignment(Investigation investigation) {
         this.investigation = investigation;
@@ -22,6 +23,8 @@ public class Assignment {
                 .cityOptions(investigation.getMisleadingCities())
                 .nextInTrail(investigation.getNextCityInTrail(investigation.getOriginCity()))
                 .build();
+
+        this.hoursLeft = investigation.getDueHours();
     }
 
     public String getCurrentLocationName() {
@@ -46,14 +49,14 @@ public class Assignment {
                 .build();
     }
 
+    public List<PointOfInterest> getPointOfInterest() {
+        return currentCity().pointsOfInterest();
+    }
+
     private void isValidCity(City city) {
         if(!getAvailableConnections().contains(city)) {
             throw new IllegalArgumentException("City is not in the available connections");
         }
-    }
-
-    public List<PointOfInterest> getPointOfInterest() {
-        return currentCity().pointsOfInterest();
     }
 
     private City currentCity() {
@@ -62,5 +65,9 @@ public class Assignment {
 
     public Statement investigatePointOfInterest(PointOfInterest pointOfInterest) {
         return pointOfInterest.getStatement();
+    }
+
+    public boolean isTimeUp() {
+        return hoursLeft <= 0;
     }
 }
