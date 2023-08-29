@@ -1,6 +1,7 @@
 package app.game.carmensandiego;
 
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.investigation.GameConfiguration;
 import app.game.carmensandiego.model.investigation.Investigation;
 import app.game.carmensandiego.model.investigation.InvestigationFactory;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +12,10 @@ import java.io.IOException;
 public class GameManager {
     private final Output output;
     private final InvestigationFactory investigationFactory;
+    private final GameConfiguration config;
 
     public void play() throws IOException, InterruptedException {
-        Game game = initGame();
+        Game game = initGame(config);
 
         displayGreetings();
 
@@ -30,8 +32,8 @@ public class GameManager {
         return Integer.parseInt(output.readInput());
     }
 
-    private Game initGame() {
-        Investigation investigation = investigationFactory.create();
+    private Game initGame(GameConfiguration config) {
+        Investigation investigation = investigationFactory.create(config);
         Assignment assignment = new Assignment(investigation);
         return new Game(output, assignment);
     }

@@ -34,6 +34,8 @@ public class BasicInvestigationFactoryTest {
     @InjectMocks
     BasicInvestigationFactory investigationFactory;
 
+    GameConfiguration gameConfiguration = GameConfiguration.builder().numberOfCitiesInTrail(3).build();
+
     @BeforeEach
     void setUp() {
         when(randomProvider.getRnd()).thenReturn(new Random(1));
@@ -49,7 +51,7 @@ public class BasicInvestigationFactoryTest {
                 CityMother.paris())
         );
 
-        Investigation investigation = investigationFactory.create();
+        Investigation investigation = investigationFactory.create(gameConfiguration);
 
         assertThat(investigation.getTrail()).hasSize(3);
     }
@@ -66,7 +68,7 @@ public class BasicInvestigationFactoryTest {
                 CityMother.tokio())
         );
 
-        Investigation investigation = investigationFactory.create();
+        Investigation investigation = investigationFactory.create(gameConfiguration);
 
         List<City> misleadingCities = investigation.getMisleadingCities();
         assertThat(misleadingCities).hasSize(3);
@@ -83,7 +85,7 @@ public class BasicInvestigationFactoryTest {
                 CityMother.london())
         );
 
-        Investigation investigation = investigationFactory.create();
+        Investigation investigation = investigationFactory.create(gameConfiguration);
 
         List<City> trail = investigation.getTrail();
         Statement statement1 = trail.get(0).pointsOfInterest().get(0).getStatement();
@@ -109,7 +111,7 @@ public class BasicInvestigationFactoryTest {
                 CityMother.bangkok())
         );
 
-        Investigation investigation = investigationFactory.create();
+        Investigation investigation = investigationFactory.create(gameConfiguration);
 
         List<City> cities = investigation.getMisleadingCities();
         List<PointOfInterest> pois = cities.stream().flatMap(c -> c.pointsOfInterest().stream()).toList();
@@ -126,7 +128,7 @@ public class BasicInvestigationFactoryTest {
                 CityMother.london())
         );
 
-        Investigation investigation = investigationFactory.create();
+        Investigation investigation = investigationFactory.create(gameConfiguration);
 
         List<Statement> statements = investigation.getTrail().get(2).pointsOfInterest().stream().map(PointOfInterest::getStatement).toList();
 

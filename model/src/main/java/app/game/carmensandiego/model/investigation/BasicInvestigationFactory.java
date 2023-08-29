@@ -15,15 +15,15 @@ import java.util.List;
 
 @RequiredArgsConstructor
 public class BasicInvestigationFactory implements InvestigationFactory {
-    private static final int AMOUNT_OF_CITIES = 3;
     private final CitiesRepository citiesRepository;
     private final RandomProvider randomProvider;
     @Override
-    public Investigation create() {
+    public Investigation create(GameConfiguration gameConfig) {
         List<City> allCities = citiesRepository.findAll();
         Collections.shuffle(allCities, randomProvider.getRnd());
-        List<City> trail = allCities.subList(0, AMOUNT_OF_CITIES);
-        List<City> otherCities = allCities.subList(AMOUNT_OF_CITIES, allCities.size());
+        int numberOfCitiesInTrail = gameConfig.getNumberOfCitiesInTrail();
+        List<City> trail = allCities.subList(0, numberOfCitiesInTrail);
+        List<City> otherCities = allCities.subList(numberOfCitiesInTrail, allCities.size());
 
         setCluesForTrail(trail);
         setCluesForMisleadingCities(otherCities);
