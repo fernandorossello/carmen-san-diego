@@ -11,9 +11,12 @@ import java.util.Optional;
 @Data
 public class Assignment {
 
+    public static final int HOURS_SPENT_TRAVEL = 8;
+    public static final int HOURS_SPENT_INVESTIGATING = 3;
     private CurrentLocation currentLocation;
     private final Investigation investigation;
     private int hoursLeft;
+    private HourCounter hourCounter;
 
     public Assignment(Investigation investigation) {
         this.investigation = investigation;
@@ -24,7 +27,7 @@ public class Assignment {
                 .nextInTrail(investigation.getNextCityInTrail(investigation.getOriginCity()))
                 .build();
 
-        this.hoursLeft = investigation.getDueHours();
+        this.hourCounter = new HourCounter(investigation.getDueHours());
     }
 
     public String getCurrentLocationName() {
@@ -41,6 +44,7 @@ public class Assignment {
 
     public void travelTo(City city) {
         isValidCity(city);
+        hourCounter.spendHours(HOURS_SPENT_TRAVEL);
         this.currentLocation = CurrentLocation.builder()
                 .previousCity(Optional.of(currentCity()))
                 .currentCity(city)
@@ -64,10 +68,11 @@ public class Assignment {
     }
 
     public Statement investigatePointOfInterest(PointOfInterest pointOfInterest) {
+        hourCounter.spendHours(HOURS_SPENT_INVESTIGATING);
         return pointOfInterest.getStatement();
     }
 
     public boolean isTimeUp() {
-        return hoursLeft <= 0;
+        return hourCounter.isTimeUp();
     }
 }

@@ -1,5 +1,6 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.HourCounter;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.investigation.Investigation;
@@ -20,6 +21,7 @@ import static app.game.carmensandiego.fixtures.CityMother.nomPen;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.locationInEuropeTrail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,6 +38,9 @@ public class AssignmentTest {
 
     @Mock
     private Investigation investigation;
+
+    @Mock
+    private HourCounter hourCounter;
 
     private Assignment assignment;
 
@@ -125,13 +130,33 @@ public class AssignmentTest {
     }
 
     @Test
-    @DisplayName("When creating an assignment, should set the hours left from the investigation deadline")
-    void createAssignment_setHoursLeft() {
-        when(investigation.getDueHours()).thenReturn(10);
+    @DisplayName("When the hour counter says time is up, assignment should say time is up")
+    void isTimeUp() {
+        when(hourCounter.isTimeUp()).thenReturn(true);
+        assignment.setHourCounter(hourCounter);
 
-        Assignment assignment = new Assignment(investigation);
-
-        assertThat(assignment.isTimeUp()).isFalse();
+        assertThat(assignment.isTimeUp()).isTrue();
     }
 
+    @Test
+    @DisplayName("When investigating a point of interest, the hour count should be reduced by 3")
+    void investigatePointOfInterest_reduceHourCount() {
+        assignment.setCurrentLocation(locationInEuropeTrail());
+        assignment.setHourCounter(hourCounter);
+
+        assignment.investigatePointOfInterest(new PointOfInterest("Puerta del Sol"));
+
+        verify(hourCounter).spendHours(3);
+    }
+
+    @Test
+    @DisplayName("When traveling to a city, the hour count should be reduced by 8")
+    void travel_reduceHourCount() {
+        assignment.setCurrentLocation(locationInEuropeTrail());
+        assignment.setHourCounter(hourCounter);
+
+        assignment.travelTo(london);
+
+        verify(hourCounter).spendHours(8);
+    }
 }
