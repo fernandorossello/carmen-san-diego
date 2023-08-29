@@ -14,23 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
 class InvestigationTest {
-
-    @Test
-    @DisplayName("When getting an amount of misleading cities, should return the right amount")
-    void getMisleadingCities() {
-        Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
-
-        assertThat(investigation.getMisleadingCities(2)).hasSize(2);
-    }
-
-    @Test
-    @DisplayName("When getting an amount of misleading cities, if the amount is greater than the available options should return all the options")
-    void getMisleadingCities_withMoreThanAvailable() {
-        Investigation investigation = new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()));
-
-        assertThat(investigation.getMisleadingCities(3)).hasSize(2);
-    }
-
     @Test
     @DisplayName("When getting the next city in the trail, should return the next one")
     void getNextCityInTrail() {

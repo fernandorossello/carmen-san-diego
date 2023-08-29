@@ -11,7 +11,6 @@ import java.util.Optional;
 @Data
 public class Assignment {
 
-    public static final int AMOUNT_OF_MISLEADING_CITIES = 4;
     private CurrentLocation currentLocation;
     private final Investigation investigation;
 
@@ -20,7 +19,7 @@ public class Assignment {
 
         this.currentLocation = CurrentLocation.builder()
                 .currentCity(investigation.getOriginCity())
-                .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
+                .cityOptions(investigation.getMisleadingCities())
                 .nextInTrail(investigation.getNextCityInTrail(investigation.getOriginCity()))
                 .build();
     }
@@ -42,7 +41,7 @@ public class Assignment {
         this.currentLocation = CurrentLocation.builder()
                 .previousCity(Optional.of(currentCity()))
                 .currentCity(city)
-                .cityOptions(investigation.getMisleadingCities(AMOUNT_OF_MISLEADING_CITIES))
+                .cityOptions(investigation.getMisleadingCities())
                 .nextInTrail(investigation.getNextCityInTrail(city))
                 .build();
     }

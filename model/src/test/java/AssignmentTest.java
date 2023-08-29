@@ -85,7 +85,7 @@ public class AssignmentTest {
     @Test
     @DisplayName("When traveling to a city, should update the city connections options from the investigation")
     void travel_updateCityConnectionsOptions() {
-        when(investigation.getMisleadingCities(4)).thenReturn(List.of(bangkok, tokio, beijing(),nomPen()));
+        when(investigation.getMisleadingCities()).thenReturn(List.of(bangkok, tokio, beijing(),nomPen()));
         assignment.setCurrentLocation(locationInEuropeTrail());
 
         assignment.travelTo(london);
