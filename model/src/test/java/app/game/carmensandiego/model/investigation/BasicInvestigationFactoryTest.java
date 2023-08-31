@@ -34,7 +34,7 @@ public class BasicInvestigationFactoryTest {
     @InjectMocks
     BasicInvestigationFactory investigationFactory;
 
-    GameConfiguration gameConfiguration = GameConfiguration.builder().numberOfCitiesInTrail(3).build();
+    GameConfiguration gameConfiguration = GameConfiguration.builder().numberOfCitiesInTrail(3).dueHours(10).build();
 
     @BeforeEach
     void setUp() {
@@ -148,7 +148,7 @@ public class BasicInvestigationFactoryTest {
 
         Investigation investigation = investigationFactory.create(gameConfiguration);
 
-        assertThat(investigation.getHoursToSpend()).isEqualTo(10);
+        assertThat(investigation.getDueHours()).isEqualTo(10);
     }
 
 }
