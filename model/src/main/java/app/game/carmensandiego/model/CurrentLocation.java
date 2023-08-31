@@ -30,14 +30,19 @@ public class CurrentLocation {
         nextInTrail.ifPresent(availableConnections::add);
 
         availableConnections.addAll(getMisleadingCities());
+
         Collections.shuffle(availableConnections, new Random(System.nanoTime())); // To prevent giving hints with the position of the cities
 
         return availableConnections;
     }
 
+    private boolean isDifferentFromPreviousCity(City city) {
+        return previousCity.isEmpty() || !previousCity.get().equals(city);
+    }
+
     private List<City> getMisleadingCities() {
         return cityOptions.stream()
-                .filter(c -> !c.equals(currentCity))
+                .filter(c -> !c.equals(currentCity) && isDifferentFromPreviousCity(c))
                 .toList()
                 .subList(0, CITIES_TO_SHOW - availableConnections.size());
     }

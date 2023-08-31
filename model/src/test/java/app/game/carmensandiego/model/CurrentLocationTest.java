@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.Optional;
 
 import static app.game.carmensandiego.fixtures.CityMother.*;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.*;
@@ -78,6 +79,21 @@ class CurrentLocationTest {
 
         assertThat(availableConnections).hasSize(4);
         assertThat(availableConnections).containsExactlyInAnyOrder(paris(), nomPen(), bangkok(), tokio());
+    }
+
+    @Test
+    @DisplayName("When having a misleading city as previous city, should not include it in the available connections twice. (BUG)")
+    void getAvailableConnectionsWithPreviousMisleadingCity() {
+        CurrentLocation currentLocation = CurrentLocation.builder()
+                .currentCity(tokio())
+                .previousCity(Optional.of(bangkok()))
+                .cityOptions(List.of(bangkok(), madrid(), london(), rome()))
+                .nextInTrail(Optional.of(beijing()))
+                .build();
+
+        List<City> cities = currentLocation.getAvailableConnections();
+
+        assertThat(cities).containsExactlyInAnyOrder(bangkok(), madrid(), london(), beijing());
     }
 
 }

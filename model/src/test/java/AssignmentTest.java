@@ -1,5 +1,6 @@
 import app.game.carmensandiego.fixtures.CityMother;
 import app.game.carmensandiego.model.Assignment;
+import app.game.carmensandiego.model.CurrentLocation;
 import app.game.carmensandiego.model.HourCounter;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
@@ -16,9 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static app.game.carmensandiego.fixtures.CityMother.beijing;
-import static app.game.carmensandiego.fixtures.CityMother.nomPen;
+import static app.game.carmensandiego.fixtures.CityMother.*;
 import static app.game.carmensandiego.fixtures.CurrentLocationMother.locationInEuropeTrail;
+import static app.game.carmensandiego.fixtures.CurrentLocationMother.locationOutsideTheEuropeTrail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.verify;
@@ -158,5 +159,20 @@ public class AssignmentTest {
         assignment.travelTo(london);
 
         verify(hourCounter).spendHours(8);
+    }
+
+    @Test
+    @DisplayName("When traveling to a wrong city, then go back to the previous city and list available connections, should not repeat the previous wrong city")
+    void travel_dontRepeatMisleadingCityWhenIsAlsoPreviousCity() {
+        when(investigation.getMisleadingCities()).thenReturn(List.of(beijing(),bangkok, tokio ,nomPen(),rome(),london()));
+
+        CurrentLocation initialLocation = locationOutsideTheEuropeTrail();
+        assignment.setCurrentLocation(initialLocation);
+
+        assignment.travelTo(initialLocation.getPreviousCity().get());
+        List<City> connections = assignment.getAvailableConnections();
+
+        assertThat(connections).hasSize(4);
+        assertThat(connections.stream().filter(city -> city.equals(initialLocation.getCurrentCity()))).hasSize(1);
     }
 }
