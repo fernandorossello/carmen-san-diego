@@ -51,9 +51,10 @@ public class GameManager {
         return new Game(output, assignment);
     }
 
-    private void displayGreetings() {
+    private void displayGreetings() throws InterruptedException {
         output.println("Bienvenido a Carmen Sandiego!");
         output.println("Tu misión es capturar a Carmen Sandiego viajando por el mundo.");
         output.println("Empecemos...");
+        Thread.sleep(2000);
     }
 }

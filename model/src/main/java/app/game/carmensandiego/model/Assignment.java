@@ -1,6 +1,7 @@
 package app.game.carmensandiego.model;
 
 import app.game.carmensandiego.model.cities.City;
+import app.game.carmensandiego.model.criminals.Criminal;
 import app.game.carmensandiego.model.investigation.Investigation;
 import app.game.carmensandiego.model.statement.Statement;
 import lombok.Data;
@@ -74,5 +75,9 @@ public class Assignment {
 
     public boolean isTimeOver() {
         return hourCounter.isTimeOver();
+    }
+
+    public Criminal getCriminal() {
+        return investigation.getCriminal();
     }
 }

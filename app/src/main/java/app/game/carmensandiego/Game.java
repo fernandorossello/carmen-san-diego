@@ -51,7 +51,7 @@ public class Game {
                 if(statement instanceof SuspectFoundStatement) {
                     output.println("");
                     output.println("");
-                    output.println("¡FELICIDADES! HAS ENCONTRADO A CARMEN SANDIEGO");
+                    output.println("¡FELICIDADES! HAS ENCONTRADO A "+ assignment.getCriminal().name().toUpperCase());
                     output.println("¡HAS GANADO!");
                     sleep(5000);
                     output.println("");
@@ -97,17 +97,5 @@ public class Game {
 
     public boolean isTimeOver() {
         return assignment.isTimeOver();
-    }
-
-    public enum Actions {
-
-        SEE_CONNECTIONS(1),
-        TRAVEL(2);
-
-        private int value;
-
-        Actions(int value) {
-            this.value = value;
-        }
     }
 }
