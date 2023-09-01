@@ -55,7 +55,11 @@ class InvestigationTest {
     }
 
     private static Investigation anInvestigation() {
-        return new Investigation(List.of(buenosAires(), madrid(), london(), paris()), List.of(tokio(), bangkok()), 10);
+        return Investigation.builder()
+                .trail(List.of(buenosAires(), madrid(), london(), paris()))
+                .misleadingCities(List.of(tokio(), bangkok()))
+                .dueHours(10)
+                .build();
     }
 
 }

@@ -4,6 +4,8 @@ import app.game.carmensandiego.model.cities.CitiesRepository;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
+import app.game.carmensandiego.model.criminals.Criminal;
+import app.game.carmensandiego.model.criminals.CriminalsRepository;
 import app.game.carmensandiego.model.statement.SuspectFoundStatement;
 import app.game.carmensandiego.model.statement.SuspectNearbyStatement;
 import app.game.carmensandiego.model.statement.SuspectNotSeenStatement;
@@ -17,6 +19,7 @@ import java.util.List;
 public class BasicInvestigationFactory implements InvestigationFactory {
     private final CitiesRepository citiesRepository;
     private final RandomProvider randomProvider;
+    private final CriminalsRepository criminalsRepository;
     @Override
     public Investigation create(GameConfiguration gameConfig) {
         List<City> allCities = citiesRepository.findAll();
@@ -24,6 +27,7 @@ public class BasicInvestigationFactory implements InvestigationFactory {
         int numberOfCitiesInTrail = gameConfig.getNumberOfCitiesInTrail();
         List<City> trail = allCities.subList(0, numberOfCitiesInTrail);
         List<City> otherCities = allCities.subList(numberOfCitiesInTrail, allCities.size());
+        Criminal criminal = getACriminal();
 
         setCluesForTrail(trail);
         setCluesForMisleadingCities(otherCities);
@@ -32,7 +36,14 @@ public class BasicInvestigationFactory implements InvestigationFactory {
                 .trail(trail)
                 .misleadingCities(otherCities)
                 .dueHours(gameConfig.getDueHours())
+                .criminal(criminal)
                 .build();
+    }
+
+    private Criminal getACriminal() {
+        List<Criminal> criminals = this.criminalsRepository.findAll();
+        Collections.shuffle(criminals);
+        return criminals.get(0);
     }
 
     private void setCluesForMisleadingCities(List<City> otherCities) {

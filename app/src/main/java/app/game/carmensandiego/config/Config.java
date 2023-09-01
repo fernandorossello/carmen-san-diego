@@ -6,6 +6,8 @@ import app.game.carmensandiego.Output;
 import app.game.carmensandiego.model.cities.CitiesRepository;
 import app.game.carmensandiego.model.RandomProvider;
 import app.game.carmensandiego.model.cities.InMemoryCitiesRepository;
+import app.game.carmensandiego.model.criminals.CriminalsRepository;
+import app.game.carmensandiego.model.criminals.InMemoryCriminalsRepository;
 import app.game.carmensandiego.model.investigation.BasicInvestigationFactory;
 import app.game.carmensandiego.model.investigation.GameConfiguration;
 import app.game.carmensandiego.model.investigation.InvestigationFactory;
@@ -36,10 +38,15 @@ public class Config {
     }
 
     @Bean
-    public InvestigationFactory investigationFactory(CitiesRepository citiesRepository) {
+    public CriminalsRepository criminalsRepository() {
+        return new InMemoryCriminalsRepository();
+    }
+
+    @Bean
+    public InvestigationFactory investigationFactory(CitiesRepository citiesRepository, CriminalsRepository criminalsRepository) {
         RandomProvider randomProvider = new RandomProvider();
 
-        return new BasicInvestigationFactory(citiesRepository, randomProvider);
+        return new BasicInvestigationFactory(citiesRepository, randomProvider, criminalsRepository);
     }
 
     @Bean

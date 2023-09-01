@@ -2,6 +2,7 @@ package app.game.carmensandiego.model.investigation;
 
 
 import app.game.carmensandiego.model.cities.City;
+import app.game.carmensandiego.model.criminals.Criminal;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -14,6 +15,7 @@ public class Investigation {
 
     private List<City> trail;
     private List<City> misleadingCities;
+    private final Criminal criminal;
     private int dueHours;
 
     public Optional<City> getNextCityInTrail(City currentCity) {

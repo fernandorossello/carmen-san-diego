@@ -1,10 +1,12 @@
 package app.game.carmensandiego.model.investigation;
 
 import app.game.carmensandiego.fixtures.CityMother;
+import app.game.carmensandiego.fixtures.CriminalMother;
 import app.game.carmensandiego.model.cities.CitiesRepository;
 import app.game.carmensandiego.model.cities.City;
 import app.game.carmensandiego.model.PointOfInterest;
 import app.game.carmensandiego.model.RandomProvider;
+import app.game.carmensandiego.model.criminals.CriminalsRepository;
 import app.game.carmensandiego.model.statement.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +31,9 @@ public class BasicInvestigationFactoryTest {
     CitiesRepository citiesRepository;
 
     @Mock
-    RandomProvider randomProvider;
+    private RandomProvider randomProvider;
+    @Mock
+    private CriminalsRepository criminalsRepository;
 
     @InjectMocks
     BasicInvestigationFactory investigationFactory;
@@ -39,6 +43,7 @@ public class BasicInvestigationFactoryTest {
     @BeforeEach
     void setUp() {
         when(randomProvider.getRnd()).thenReturn(new Random(1));
+        when(criminalsRepository.findAll()).thenReturn(List.of(CriminalMother.carmenSanDiego()));
     }
 
     @Test
@@ -149,6 +154,20 @@ public class BasicInvestigationFactoryTest {
         Investigation investigation = investigationFactory.create(gameConfiguration);
 
         assertThat(investigation.getDueHours()).isEqualTo(10);
+    }
+
+    @Test
+    @DisplayName("When creating an investigation, should create it with a criminal assigned to it")
+    void createInvestigation_withCriminal() {
+        when(citiesRepository.findAll()).thenReturn(Arrays.asList(
+                CityMother.paris(),
+                CityMother.madrid(),
+                CityMother.london())
+        );
+
+        Investigation investigation = investigationFactory.create(gameConfiguration);
+
+        assertThat(investigation.getCriminal()).isEqualTo(CriminalMother.carmenSanDiego());
     }
 
 }
