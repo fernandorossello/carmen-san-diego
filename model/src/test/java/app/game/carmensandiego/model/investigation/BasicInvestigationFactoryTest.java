@@ -43,7 +43,7 @@ public class BasicInvestigationFactoryTest {
     @BeforeEach
     void setUp() {
         when(randomProvider.getRnd()).thenReturn(new Random(1));
-        when(criminalsRepository.findAll()).thenReturn(List.of(CriminalMother.carmenSanDiego()));
+        when(criminalsRepository.findAll()).thenReturn(List.of(CriminalMother.ladyAgatha()));
     }
 
     @Test
@@ -167,7 +167,7 @@ public class BasicInvestigationFactoryTest {
 
         Investigation investigation = investigationFactory.create(gameConfiguration);
 
-        assertThat(investigation.getCriminal()).isEqualTo(CriminalMother.carmenSanDiego());
+        assertThat(investigation.getCriminal()).isEqualTo(CriminalMother.ladyAgatha());
     }
 
 }

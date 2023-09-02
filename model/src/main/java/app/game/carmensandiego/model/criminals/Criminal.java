@@ -1,3 +1,5 @@
 package app.game.carmensandiego.model.criminals;
 
-public record Criminal(String name) {}
+import app.game.carmensandiego.model.criminals.characteristics.*;
+
+public record Criminal(String name, Sex sex, Hobby hobby, Auto auto, Hair hair, Feature feature) {}
